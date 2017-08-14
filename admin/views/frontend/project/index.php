@@ -2,7 +2,7 @@
 		<div class="page-content">
 			<!-- BEGIN PAGE HEADER-->
 			<h3 class="page-title">
-			 Contractors List
+			 Project List
 			</h3>
 			<div class="page-bar">
 				 <?php echo set_breadcrumb(); ?>
@@ -18,7 +18,7 @@
 					<div class="portlet box blue">
 						<div class="portlet-title">
 							<div class="caption">
-								<i class="fa fa-user"></i>Contractors List
+								<i class="fa fa-ticket"></i>Project List
 							</div>
 						</div>
 						<div class="portlet-body">
@@ -35,3 +35,5 @@
 			<!-- END PAGE CONTENT -->
 		</div>
 	</div>
+
+	<div class="modal fade" id="TicketEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> </div>
