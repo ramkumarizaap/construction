@@ -1,4 +1,14 @@
-
+<?php if($btn){?>
+<div class="col-md-3 pull-right">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="btn-group pull-right">
+        <?=$btn;?>  
+      </div>
+    </div>
+  </div>
+</div>
+<?php }?>
 <div class="col-md-9 table-sub-header text-right search-bar pull-left">
   <div class="row">
     <div class="div top-lisiting-search">

@@ -1,10 +1,7 @@
 <?php
-
 //
 // Layout config for the site admin 
 //
-                                        
-
 $config['layout']['default']['template'] = 'layouts/frontend';
 $config['layout']['default']['title']    = 'Construction - Admin';
 $config['layout']['default']['js_dir']   = "assets/js/admin";

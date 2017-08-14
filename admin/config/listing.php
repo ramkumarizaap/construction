@@ -23,11 +23,11 @@
  */
  
 
-$config['customer_index'] = array(
+$config['contractors_index'] = array(
 	"view"		=> 	'listing/listing',
 	"init_scripts" => 'listing/init_scripts',
-	"advance_search_view" => 'frontend/customer/filter',
-	"base_url"	=> 	'/customer/index/',
+	"advance_search_view" => 'frontend/contractors/filter',
+	"base_url"	=> 	'/contractors/index/',
 	"per_page"	=>	"20",
 	"fields"	=> array(   
 						'company_name'=>array('name'=>'Company Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),					
@@ -40,11 +40,11 @@ $config['customer_index'] = array(
 	"default_direction" => "DESC"
 );
 
-$config['tickets_index'] = array(
+$config['project_index'] = array(
 	"view"		=> 	'listing/listing',
 	"init_scripts" => 'listing/init_scripts',
-	"advance_search_view" => 'frontend/tickets/filter',
-	"base_url"	=> 	'/tickets/index/',
+	"advance_search_view" => 'frontend/project/filter',
+	"base_url"	=> 	'/project/index/',
 	"per_page"	=>	"20",
 	"fields"	=> array(   
 						'id'=>array('name'=>'Ticket id#', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),					

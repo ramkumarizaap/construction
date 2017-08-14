@@ -11,7 +11,6 @@
 <?php else:?>
 
 <div class="page-container">
-
   <div class="page-header md-shadow-z-1-i navbar">
     <div class="page-header-inner">
       <!-- BEGIN LOGO -->
@@ -61,8 +60,6 @@
       <!-- END TOP NAVIGATION MENU -->
     </div>
   </div>
-
-
   <div class="page-sidebar-wrapper">
     <?php 
       $uri = $this->uri->segment(1);
@@ -74,23 +71,22 @@
           <div class="sidebar-toggler">
           </div>
         </li>
-        <li class="start <?=($uri=='customer')?'active':'';?>">
-          <a href="<?=site_url('customer');?>">
-          <i class="fa fa-user"></i>
-          <span class="title">Customer</span>
-          <?=($uri=='customer')?"<span class='selected'>":"";?>
+        <li class="start <?=($uri=='project')?'active':'';?>">
+          <a href="<?=site_url('project');?>">
+          <i class="fa fa-anchor"></i>
+          <span class="title">Project</span>
+          <?=($uri=='project')?"<span class='selected'>":"";?>
           </a>
         </li>
 
-        <li class="start <?=($uri=='tickets')?'active':'';?>">
-          <a href="<?=site_url('tickets');?>">
-          <i class="fa fa-ticket"></i>
-          <span class="title">Tickets</span>
-          <?=($uri=='tickets')?"<span class='selected'>":"";?>
+        <li class="start <?=($uri=='contractors')?'active':'';?>">
+          <a href="<?=site_url('contractors');?>">
+          <i class="fa fa-users"></i>
+          <span class="title">Contractors</span>
+          <?=($uri=='contractors')?"<span class='selected'>":"";?>
           </a>
         </li>
       </ul>
     </div>
   </div>
-
 <?php endif;?>

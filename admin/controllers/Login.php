@@ -26,7 +26,7 @@ class Login extends Admin_Controller
 
             if($this->login_model->login($form['email'], $form['password']))
             {
-                redirect("customer");
+                redirect("contractors");
             }else{
 
                 $this->session->set_flashdata("login_fail1","Invalid Username or Password",TRUE);
