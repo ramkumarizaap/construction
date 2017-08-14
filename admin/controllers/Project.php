@@ -2,7 +2,7 @@
 
 require_once(COREPATH."controllers/Admin_controller.php");
 
-class Tickets extends Admin_Controller
+class Project extends Admin_Controller
 {
 
     function __construct()
@@ -31,7 +31,7 @@ class Tickets extends Admin_Controller
 
         $listing = $this->listing->get_listings('tickets_model', 'listing');
 
-
+        $this->data['btn'] = "<a href=".site_url('project/add')." class='btn green'>Add New Project <i class='fa fa-plus'></i></a>";
         if($this->input->is_ajax_request())
           $this->_ajax_output(array('listing' => $listing), TRUE);
 
@@ -44,7 +44,12 @@ class Tickets extends Admin_Controller
         $this->data['listing'] = $listing;
         $this->data['grid'] = $this->load->view('listing/view', $this->data, TRUE);
 
-      	$this->layout->view('/frontend/tickets/index');
+      	$this->layout->view('/frontend/project/index');
+    }
+
+    public function add()
+    {
+      $this->layout->view('/frontend/project/add');
     }
 
     public function view($edit_id = 0){

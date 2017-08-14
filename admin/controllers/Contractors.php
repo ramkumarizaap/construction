@@ -2,7 +2,7 @@
 
 require_once(COREPATH."controllers/Admin_controller.php");
 
-class Customer extends Admin_Controller
+class Contractors extends Admin_Controller
 {
 
 	protected $_customer_validation_rules = array (
@@ -39,7 +39,7 @@ class Customer extends Admin_Controller
     $this->listing->initialize(array('listing_action' => $str));
 
     $listing = $this->listing->get_listings('customer_model', 'listing');
-
+    $this->data['btn'] = "<a href=".site_url('user/add_employer')." class='btn green'>Add New Employer <i class='fa fa-plus'></i></a>";
 
     if($this->input->is_ajax_request())
       $this->_ajax_output(array('listing' => $listing), TRUE);
@@ -52,7 +52,6 @@ class Customer extends Admin_Controller
     $this->data['search_bar'] = $this->load->view('listing/search_bar', $this->data, TRUE);
     $this->data['listing'] = $listing;
     $this->data['grid'] = $this->load->view('listing/view', $this->data, TRUE);
-
   	$this->layout->view('/frontend/customer/index');
   }
 
