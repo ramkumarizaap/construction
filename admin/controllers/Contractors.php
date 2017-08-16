@@ -155,26 +155,20 @@ class Contractors extends Admin_Controller
 
     function delete($del_id)
     {
-        $access_data = $this->contractor_model->get_where(array("id"=>$del_id),'id')->row_array();
-       
-        $output=array();
-
-        if(count($access_data) > 0){
-
-            $this->contractor_model->delete(array("id"=>$del_id));
-            $this->contractor_model->delete(array("customer_id"=>$access_data['id']),'tickets');
-
-            $output['message'] ="Record deleted successfuly.";
-            $output['status']  = "success";
-        }
-        else
-        {
-           $output['message'] ="This record not matched by Customer.";
-           $output['status']  = "error";
-        }
-        
-        $this->_ajax_output($output, TRUE);
-            
+      $access_data = $this->contractor_model->get_where(array("id"=>$del_id),'id')->row_array();     
+      $output=array();
+      if(count($access_data) > 0)
+      {
+        $this->contractor_model->delete(array("id"=>$del_id));
+        $output['message'] ="Record deleted successfuly.";
+        $output['status']  = "success";
+      }
+      else
+      {
+        $output['message'] ="This record not matched by Contractor.";
+        $output['status']  = "error";
+      }      
+      $this->_ajax_output($output, TRUE);            
     }
 
   
