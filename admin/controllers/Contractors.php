@@ -7,7 +7,7 @@ class Contractors extends Admin_Controller
 
 	protected $_customer_validation_rules = array (
                        array('field' => 'company_name', 'label' => 'Company Name', 'rules' => 'trim|required'), 
-			           array('field' => 'name', 'label' => 'First Name', 'rules' => 'trim|required'),
+			           array('field' => 'first_name', 'label' => 'First Name', 'rules' => 'trim|required'),
 			           array('field' => 'email', 'label' => 'Email', 'rules' => 'trim|required|valid_email'),
 			           array('field' => 'phone', 'label' => 'Phone', 'rules' => 'trim|required'),
 			           array('field' => 'address', 'label' => 'Address', 'rules' => 'trim|required'),
@@ -21,7 +21,7 @@ class Contractors extends Admin_Controller
     if(!is_logged_in())
       redirect('login');
 
-    $this->load->model('customer_model');
+    $this->load->model('contractor_model');
   }
 
   
@@ -34,11 +34,11 @@ class Contractors extends Admin_Controller
     $this->simple_search_fields = array('company_name' => 'Company Name','name'=>'Name','email'=>'Email','phone'=>'Phone','address'=>'Address');
     $this->_narrow_search_conditions = array("start_date");
 
-    $str = '<a href="'.site_url('customer/add/{id}').'" class="btn btn btn-padding yellow table-action"><i class="fa fa-edit edit"></i></a><a href="javascript:void(0);" data-original-title="Remove" data-toggle="tooltip" data-placement="top" class="table-action btn-padding btn red" onclick="delete_record(\'customer/delete/{id}\',this);"><i class="fa fa-trash-o trash"></i></a>';
+    $str = '<a href="'.site_url('contractors/add/{id}').'" class="btn btn btn-padding yellow table-action"><i class="fa fa-edit edit"></i></a><a href="javascript:void(0);" data-original-title="Remove" data-toggle="tooltip" data-placement="top" class="table-action btn-padding btn red" onclick="delete_record(\'contractors/delete/{id}\',this);"><i class="fa fa-trash-o trash"></i></a>';
     
     $this->listing->initialize(array('listing_action' => $str));
 
-    $listing = $this->listing->get_listings('customer_model', 'listing');
+    $listing = $this->listing->get_listings('contractor_model', 'listing');
     $this->data['btn'] = "<a href=".site_url('contractors/add')." class='btn green'>Add New Contractor <i class='fa fa-plus'></i></a>";
 
     if($this->input->is_ajax_request())
@@ -63,10 +63,15 @@ class Contractors extends Admin_Controller
                 $edit_id = $this->input->post('edit_id');
 
             $this->form_validation->set_rules('company_name','Company Name','trim|required');
-            $this->form_validation->set_rules('name','Name','trim|required');
-            $this->form_validation->set_rules('email','Email Name','trim|required|valid_email|callback_check_email['.$edit_id.']');
-            $this->form_validation->set_rules('phone','phone','trim|required');
-            $this->form_validation->set_rules('address','Address','trim|required');
+            $this->form_validation->set_rules('first_name','First Name','trim|required');
+            $this->form_validation->set_rules('last_name','Last Name','trim|required');
+            $this->form_validation->set_rules('email1','Primary Email','trim|required|valid_email|callback_check_email['.$edit_id.']');
+            $this->form_validation->set_rules('office_phone','Office Phone','trim|required');
+            $this->form_validation->set_rules('mobile_phone','Mobile Phone','trim|required');
+            $this->form_validation->set_rules('address1','Address 1','trim|required');
+            $this->form_validation->set_rules('city','City','trim|required');
+            $this->form_validation->set_rules('state','State','trim|required');
+            $this->form_validation->set_rules('zipcode','Zipcode','trim|required');
             $this->form_validation->set_rules('enabled','Enabled','trim|required');
             
 
@@ -76,42 +81,41 @@ class Contractors extends Admin_Controller
             {
                 $ins_data = array();
                 $ins_data['company_name'] = $this->input->post('company_name');
-                $ins_data['name']         = $this->input->post('name');
-                $ins_data['email']        = $this->input->post('email');
-                $ins_data['phone']        = $this->input->post('phone');
-                $ins_data['address']      = $this->input->post('address');
-                $ins_data['status']       = $this->input->post('enabled');
-               
-
+                $ins_data['first_name']         = $this->input->post('first_name');
+                $ins_data['last_name']         = $this->input->post('last_name');
+                $ins_data['email1']        = $this->input->post('email1');
+                $ins_data['email2']        = $this->input->post('email2');
+                $ins_data['username']        = strtolower($ins_data['first_name']).rand();
+                $ins_data['password']        = md5("password");
+                $ins_data['office_phone']        = $this->input->post('office_phone');
+                $ins_data['cell_phone']        = $this->input->post('mobile_phone');
+                $ins_data['address1']      = $this->input->post('address1');
+                $ins_data['city']      = $this->input->post('city');
+                $ins_data['state']      = $this->input->post('state');
+                $ins_data['zip']      = $this->input->post('zipcode');
+                $ins_data['active']       = $this->input->post('enabled');
+                $ins_data['created_id']       = get_user_data()['id'];
                 if($edit_id)
                 {
-                    $ins_data['updated_date'] = date('Y-m-d H:i:s'); 
-                    $this->customer_model->update(array("id" => $edit_id),$ins_data);
-
-                    $msg = 'Customer updated successfully';
+                  $ins_data['updated_id']       = get_user_data()['id'];
+                  $ins_data['updated_date'] = date('Y-m-d H:i:s'); 
+                  $this->contractor_model->update(array("id" => $edit_id),$ins_data);
+                  $msg = 'Contractor updated successfully';
                 }
                 else
                 {    
-                    $ins_data['created_date'] = date('Y-m-d H:i:s'); 
-                    $this->customer_model->insert($ins_data);
-
-                    $msg = 'Customer added successfully';
+                  $ins_data['created_date'] = date('Y-m-d H:i:s'); 
+                  $this->contractor_model->insert($ins_data);
+                  $msg = 'Contractor added successfully';
                 }
-
                 $this->session->set_flashdata('success_msg',$msg,TRUE);
-
-                redirect('customer');
+                redirect('contractors');
             }    
             else
             {            
-                $edit_data = array();
-                $edit_data['id']            = '';
-                $edit_data['company_name']  = '';
-                $edit_data['name']          = '';
-                $edit_data['email']         = '';
-                $edit_data['phone']         = '';
-                $edit_data['address']       = '';
-                $edit_data['status']        = 'Y';                    
+                $edit_data = array('id'=>'','first_name'=>'','company_name'=>'','last_name'=>'','email1'=>'','email2'=>'',
+                    'office_phone'=>'','cell_phone'=>'','city'=>'','state'=>'','zip'=>'','address1'=>'','address2'=>'');
+                $edit_data['active']        = 'Y';                    
 
             }
 
@@ -124,7 +128,7 @@ class Contractors extends Admin_Controller
         }
 
         if($edit_id)
-            $edit_data =$this->customer_model->get_where(array("id" => $edit_id))->row_array();
+            $edit_data =$this->contractor_model->get_where(array("id" => $edit_id))->row_array();
 
         $this->data['editdata']  = $edit_data;
 
@@ -138,9 +142,9 @@ class Contractors extends Admin_Controller
         if($id)
             $where['id !='] = $id;
 
-        $where['email'] = $mail;
+        $where['email1'] = $mail;
 
-        $result = $this->customer_model->get_where( $where)->num_rows();
+        $result = $this->contractor_model->get_where( $where)->num_rows();
      
         if ($result) {
             $this->form_validation->set_message('check_email', 'Given email already exists!');
@@ -151,14 +155,14 @@ class Contractors extends Admin_Controller
 
     function delete($del_id)
     {
-        $access_data = $this->customer_model->get_where(array("id"=>$del_id),'id')->row_array();
+        $access_data = $this->contractor_model->get_where(array("id"=>$del_id),'id')->row_array();
        
         $output=array();
 
         if(count($access_data) > 0){
 
-            $this->customer_model->delete(array("id"=>$del_id));
-            $this->customer_model->delete(array("customer_id"=>$access_data['id']),'tickets');
+            $this->contractor_model->delete(array("id"=>$del_id));
+            $this->contractor_model->delete(array("customer_id"=>$access_data['id']),'tickets');
 
             $output['message'] ="Record deleted successfuly.";
             $output['status']  = "success";

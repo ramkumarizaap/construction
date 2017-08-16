@@ -31,9 +31,9 @@ $config['contractors_index'] = array(
 	"per_page"	=>	"20",
 	"fields"	=> array(   
 						'company_name'=>array('name'=>'Company Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),					
-						'name'=>array('name'=>'Customer Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),
-						'email'=>array('name'=>'Email', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
-						'phone'=>array('name'=>'Phone', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'first_name'=>array('name'=>'Contractor Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),
+						'email1'=>array('name'=>'Email', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'office_phone'=>array('name'=>'Phone', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
 						'status'=>array('name'=>'Status', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1)),
 
 	"default_order"	=> "id",
