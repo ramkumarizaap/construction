@@ -58,4 +58,20 @@ $config['project_index'] = array(
 	"default_direction" => "DESC"
 );
 
+
+
+$config['works_index'] = array(
+	"view"		=> 	'listing/listing',
+	"init_scripts" => 'listing/init_scripts',
+	"advance_search_view" => 'frontend/works/filter',
+	"base_url"	=> 	'/works/index/',
+	"per_page"	=>	"20",
+	"fields"	=> array(   
+						'work_name'=>array('name'=>'Work Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),
+						'status'=>array('name'=>'Status', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1)),
+
+	"default_order"	=> "id",
+	"default_direction" => "DESC"
+);
+
 ?>

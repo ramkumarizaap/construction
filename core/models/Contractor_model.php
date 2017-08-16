@@ -25,18 +25,18 @@ class Contractor_model extends App_model
         case 'company_name':
           $this->db->like($key, $value);
         break;
-        case 'name':
+        case 'first_name':
           $this->db->like($key, $value);
         break;
-        case 'email':
+        case 'email1':
           $this->db->like($key, $value);
         break;
-        case 'phone':
+        case 'office_phone':
           $this->db->like($key, $value);
         break;
-        case 'address':
-          $this->db->like($key, $value);
-        break;
+        // case 'active':
+        //   $this->db->like($key, $value);
+        // break;
       }
     }
     return parent::listing();

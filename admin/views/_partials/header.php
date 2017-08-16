@@ -86,6 +86,14 @@
           <?=($uri=='contractors')?"<span class='selected'>":"";?>
           </a>
         </li>
+
+        <li class="start <?=($uri=='works')?'active':'';?>">
+          <a href="<?=site_url('works');?>">
+          <i class="fa fa-cogs"></i>
+          <span class="title">Work Items</span>
+          <?=($uri=='works')?"<span class='selected'>":"";?>
+          </a>
+        </li>
       </ul>
     </div>
   </div>

@@ -31,7 +31,7 @@ class Contractors extends Admin_Controller
   	$this->layout->add_javascripts(array('listing'));
 
     $this->load->library('listing');
-    $this->simple_search_fields = array('company_name' => 'Company Name','name'=>'Name','email'=>'Email','phone'=>'Phone','address'=>'Address');
+    $this->simple_search_fields = array('company_name' => 'Company Name','first_name'=>'Name','email1'=>'Email','office_phone'=>'Phone');
     $this->_narrow_search_conditions = array("start_date");
 
     $str = '<a href="'.site_url('contractors/add/{id}').'" class="btn btn btn-padding yellow table-action"><i class="fa fa-edit edit"></i></a><a href="javascript:void(0);" data-original-title="Remove" data-toggle="tooltip" data-placement="top" class="table-action btn-padding btn red" onclick="delete_record(\'contractors/delete/{id}\',this);"><i class="fa fa-trash-o trash"></i></a>';
