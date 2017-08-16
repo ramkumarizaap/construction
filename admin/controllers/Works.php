@@ -42,7 +42,7 @@ class Works extends Admin_Controller
       {
           if($this->input->post('edit_id'))            
               $edit_id = $this->input->post('edit_id');
-          $this->form_validation->set_rules('work_name','Company Name','trim|required');
+          $this->form_validation->set_rules('work_name','Work Item Name','trim|required');
           $this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
               
           if ($this->form_validation->run())
