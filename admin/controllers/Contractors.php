@@ -39,7 +39,7 @@ class Contractors extends Admin_Controller
     $this->listing->initialize(array('listing_action' => $str));
 
     $listing = $this->listing->get_listings('customer_model', 'listing');
-    $this->data['btn'] = "<a href=".site_url('user/add_employer')." class='btn green'>Add New Employer <i class='fa fa-plus'></i></a>";
+    $this->data['btn'] = "<a href=".site_url('contractors/add')." class='btn green'>Add New Contractor <i class='fa fa-plus'></i></a>";
 
     if($this->input->is_ajax_request())
       $this->_ajax_output(array('listing' => $listing), TRUE);
@@ -52,7 +52,7 @@ class Contractors extends Admin_Controller
     $this->data['search_bar'] = $this->load->view('listing/search_bar', $this->data, TRUE);
     $this->data['listing'] = $listing;
     $this->data['grid'] = $this->load->view('listing/view', $this->data, TRUE);
-  	$this->layout->view('/frontend/customer/index');
+  	$this->layout->view('/frontend/contractor/index');
   }
 
   function add($edit_id =''){
@@ -128,7 +128,7 @@ class Contractors extends Admin_Controller
 
         $this->data['editdata']  = $edit_data;
 
-        $this->layout->view('frontend/customer/add');
+        $this->layout->view('frontend/contractor/add');
    }
 
     function check_email($mail,$id)
