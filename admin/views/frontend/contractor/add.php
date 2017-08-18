@@ -151,5 +151,3 @@
 			<!-- END PAGE CONTENT -->
 		</div>
 	</div>
-
-
