@@ -84,7 +84,7 @@ class Project extends Admin_Controller
       if ($this->form_validation->run())
       {
       }
-      
+
         if($edit_id)
         {
           $ins_data['updated_id']       = get_user_data()['id'];
@@ -106,9 +106,9 @@ class Project extends Admin_Controller
 
         else
         {  
-          $this->data['title']     = "ADD projects_model";
+          $this->data['title']     = "ADD PROJECTS";
           $this->data['crumb']   = "Add";
-          $this->data['editdata'] = array("first_name" => "","last_name"=>"","email"=>"","phone"=>"","addr"=>"","city"=>"","state"=>"","country"=>"","zip_code"=>"","se_first_name" => "","se_last_name"=>"","se_email"=>"","se_phone"=>"","se_addr"=>"","se_city"=>"","se_state"=>"","se_country"=>"","se_zip_code"=>"","a_c"=>"","p_name"=>"","p_s_d"=>"","p_e_d"=>"","p_addr1"=>"","p_addr2"=>"","p_city"=>"","p_state"=>"","p_zip_code"=>"","r_name"=>"","r_no"=>"","r_desc"=>"");  
+          $this->data['editdata'] = array("first_name" => "","last_name"=>"","email"=>"","phone"=>"","addr"=>"","city"=>"","state"=>"","country"=>"","zip_code"=>"","se_first_name" => "","se_last_name"=>"","se_email"=>"","se_phone"=>"","se_addr"=>"","se_city"=>"","se_state"=>"","se_country"=>"","se_zip_code"=>"","a_c"=>"","p_name"=>"","p_s_d"=>"","p_e_d"=>"","p_addr1"=>"","p_addr2"=>"","p_city"=>"","p_state"=>"","p_zip_code"=>"","r_name"=>"","r_no"=>"","r_desc"=>"","m_name"=>"","m_cnt"=>"","m_s_d"=>"","m_e_d"=>"","m_desc"=>"");  
               
         }
         

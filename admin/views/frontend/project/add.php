@@ -1,4 +1,7 @@
+<?php
 
+//echo "<pre>";print_r($editdata);die;
+?>
 <div class="page-content-wrapper">
 		<div class="page-content">
 			<!-- BEGIN PAGE HEADER-->
@@ -23,6 +26,53 @@
                         <!-- BEGIN FORM-->
                         <form action="#" class="mt-repeater form-horizontal" name="add_project" id="add_new_project" method="post">
                            <div class="form-body">
+
+                               <!--/row-->
+                              <h3 class="form-section"><strong>Project Details</strong> </h3>
+                              <!--/row-->
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="form-group <?php echo (form_error('p_name'))?'has-error':'';?>">
+                                       <label class="control-label col-md-3">Project Name<span class="required">*</span></label>
+                                       <div class="col-md-9">
+                                          <input type="text" class="form-control" name="p_name" id="p_name" value="<?php echo set_value('p_name',$editdata['p_name']);?>"> 
+                                          <?php echo form_error('p_name'); ?>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group <?php echo (form_error('p_s_d'))?'has-error':'';?>">
+                                       <label class="control-label col-md-3">Project Start Date<span class="required">*</span></label>
+                                       <div class="col-md-9">
+                                          <input type="text" class="form-control form-control-inline date date-picker" name="p_s_d" id="p_s_d" value="<?php echo set_value('p_s_d',$editdata['p_s_d']);?>"> 
+                                          <?php echo form_error('p_s_d'); ?>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="form-group <?php echo (form_error('p_e_d'))?'has-error':'';?>">
+                                       <label class="control-label col-md-3">Project End Date<span class="required">*</span></label>
+                                       <div class="col-md-9">
+                                          <input type="text" class="form-control form-control-inline date date-picker" name="p_e_d" id="p_e_d" value="<?php echo set_value('p_e_d',$editdata['p_e_d']);?>"> 
+                                          <?php echo form_error('p_e_d'); ?>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                       <label class="control-label col-md-3">Project Blue Print</label>
+                                       <div class="col-md-9">
+                                          <input type="file" class="form-control" name="p_b_f" id="p_b_f">
+                                          <?php echo form_error('p_b_f'); ?> 
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <!--/span-->
+                                
+                              </div>
+
                               <h3 class="form-section"><strong>Primary Contact Address</strong></h3>
                               
                               <div class="row">
@@ -103,7 +153,7 @@
                                          <?php if(is_array($state) && count($state)): 
                                             foreach($state as $key3=>$value3):
                                          ?>
-                                             <option value="<?php echo $value3['state_code']; ?>"><?php echo $value3['state_name']; ?></option>
+                                             <option value="<?php echo $value3['state_code']; ?>" <?php echo (isset($editdata['state']) && $editdata['state']==$value3['state_code'])?"selected":''; ?> ><?php echo $value3['state_name']; ?></option>
                                           <?php endforeach;endif; ?>
                                           </select>
                                           <?php echo form_error("state"); ?>
@@ -119,7 +169,7 @@
                                             <?php if(is_array($country) && count($country)): 
                                             foreach($country as $key4=>$value4):
                                          ?>
-                                             <option value="<?php echo $value4['code']; ?>"><?php echo $value4['name']; ?></option>
+                                             <option value="<?php echo $value4['code']; ?>" <?php echo (isset($editdata['country']) && $editdata['country']==$value4['code'])?"selected":''; ?>><?php echo $value4['name']; ?></option>
                                           <?php endforeach;endif; ?>
                                           </select>
                                         <?php echo form_error("country"); ?>
@@ -219,7 +269,7 @@
                                             <?php if(is_array($state) && count($state)): 
                                             foreach($state as $key3=>$value3):
                                          ?>
-                                             <option value="<?php echo $value3['state_code']; ?>"><?php echo $value3['state_name']; ?></option>
+                                             <option value="<?php echo $value3['state_code']; ?>" <?php echo (isset($editdata['se_state']) && $editdata['se_state']==$value3['state_code'])?"selected":''; ?>><?php echo $value3['state_name']; ?></option>
                                           <?php endforeach;endif; ?>
                                           </select>
                                        </div>
@@ -234,7 +284,7 @@
                                              <?php if(is_array($country) && count($country)): 
                                             foreach($country as $key4=>$value4):
                                          ?>
-                                             <option value="<?php echo $value4['code']; ?>"><?php echo $value4['name']; ?></option>
+                                             <option value="<?php echo $value4['code']; ?>" <?php echo (isset($editdata['se_country']) && $editdata['se_country']==$value4['code'])?"selected":''; ?>><?php echo $value4['name']; ?></option>
                                           <?php endforeach;endif; ?>
                                           </select>
                                        </div>
@@ -264,11 +314,15 @@
                                          <label class="control-label">Contractor<span class="required">*</span></label>
                                          <br>
 
-                                         <?php if(is_array($contractor_info) && count($contractor_info)): 
+                                         <?php 
+                                            
+                                            $is_cnt_list = (isset($editdata['a_c']) && is_array($editdata['a_c']))?$editdata['a_c']:array();
+                                            
+                                            if(is_array($contractor_info) && count($contractor_info)): 
                                             foreach($contractor_info as $key=>$value):
                                          ?>
                                          <label class="mt-checkbox">
-                                             <input type="checkbox" name="a_c[]" id="inlineCheckbox<?php echo $value['id']; ?>" value="<?php echo $value['id']; ?>" data-contractor="<?php echo $value['company_name']; ?>"> <?php echo $value['company_name']; ?>
+                                             <input type="checkbox" name="a_c[]" id="inlineCheckbox<?php echo $value['id']; ?>" value="<?php echo $value['id']; ?>" data-contractor="<?php echo $value['company_name']; ?>" <?php echo (in_array($value['id'],$is_cnt_list))?"checked":""; ?>> <?php echo $value['company_name']; ?>
                                              <span></span>
                                          </label>
                                         <?php endforeach; endif; ?>
@@ -277,51 +331,7 @@
                                  </div>
                               </div>
 
-                              <!--/row-->
-                              <h3 class="form-section"><strong>Project Details</strong> </h3>
-                              <!--/row-->
-                              <div class="row">
-                                 <div class="col-md-6">
-                                    <div class="form-group <?php echo (form_error('p_name'))?'has-error':'';?>">
-                                       <label class="control-label col-md-3">Project Name<span class="required">*</span></label>
-                                       <div class="col-md-9">
-                                          <input type="text" class="form-control" name="p_name" id="p_name" value="<?php echo set_value('p_name',$editdata['p_name']);?>"> 
-                                          <?php echo form_error('p_name'); ?>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="col-md-6">
-                                    <div class="form-group <?php echo (form_error('p_s_d'))?'has-error':'';?>">
-                                       <label class="control-label col-md-3">Project Start Date<span class="required">*</span></label>
-                                       <div class="col-md-9">
-                                          <input type="text" class="form-control form-control-inline date date-picker" name="p_s_d" id="p_s_d" value="<?php echo set_value('p_s_d',$editdata['p_s_d']);?>"> 
-                                          <?php echo form_error('p_s_d'); ?>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="row">
-                                 <div class="col-md-6">
-                                    <div class="form-group <?php echo (form_error('p_e_d'))?'has-error':'';?>">
-                                       <label class="control-label col-md-3">Project End Date<span class="required">*</span></label>
-                                       <div class="col-md-9">
-                                          <input type="text" class="form-control form-control-inline date date-picker" name="p_e_d" id="p_e_d" value="<?php echo set_value('p_e_d',$editdata['p_e_d']);?>"> 
-                                          <?php echo form_error('p_e_d'); ?>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                       <label class="control-label col-md-3">Project Blue Print</label>
-                                       <div class="col-md-9">
-                                          <input type="file" class="form-control" name="p_b_f" id="p_b_f">
-                                          <?php echo form_error('p_b_f'); ?> 
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <!--/span-->
-                                
-                              </div>
+                             
                               
                               <!--/row-->
                               <h3 class="form-section"><strong>Project Location</strong></h3>
@@ -331,7 +341,7 @@
                                     <div class="form-group <?php echo (form_error('p_addr1'))?'has-error':'';?>">
                                        <label class="control-label col-md-3">Address 1<span class="required">*</span></label>
                                        <div class="col-md-9">
-                                          <textarea class="form-control" name="p_addr1" id="p_addr1"></textarea>
+                                          <textarea class="form-control" name="p_addr1" id="p_addr1"><?php echo set_value('p_addr1',$editdata['p_addr1']);?></textarea>
                                           <?php echo form_error('p_addr1'); ?> 
                                        </div>
                                     </div>
@@ -340,7 +350,7 @@
                                     <div class="form-group">
                                        <label class="control-label col-md-3">Address 2</label>
                                        <div class="col-md-9">
-                                          <textarea class="form-control" name="p_addr2" id="p_addr2"></textarea> 
+                                          <textarea class="form-control" name="p_addr2" id="p_addr2"><?php echo set_value('p_addr2',$editdata['p_addr2']);?></textarea> 
                                        </div>
                                     </div>
                                  </div>
@@ -364,7 +374,7 @@
                                             <?php if(is_array($state) && count($state)): 
                                             foreach($state as $key5=>$value5):
                                          ?>
-                                             <option value="<?php echo $value5['state_code']; ?>"><?php echo $value5['state_name']; ?></option>
+                                             <option value="<?php echo $value5['state_code']; ?>" <?php echo (isset($editdata['p_state']) && $editdata['p_state']==$value5['state_code'])?"selected":''; ?>><?php echo $value5['state_name']; ?></option>
                                           <?php endforeach;endif; ?>
                                           </select> 
                                           <?php echo form_error('p_state'); ?>
@@ -400,19 +410,19 @@
                                              <div class="mt-repeater-input">
                                                 <label class="control-label">Room Name</label>
                                                 <br/>
-                                                <input class="input-group form-control" size="16" type="text"  name="r_name[]"/> 
+                                                <input class="input-group form-control" size="16" type="text"  name="r_name" value="<?php echo set_value('r_name',$editdata['r_name']);?>"/> 
                                            
                                              </div>
                                              <div class="mt-repeater-input">
                                                 <label class="control-label">Room Number</label>
                                                 <br/>
-                                                <input class="input-group form-control" size="16" type="text"  name="r_no[]"/> 
+                                                <input class="input-group form-control" size="16" type="text"  name="r_no" value="<?php echo set_value('r_no',$editdata['r_no']);?>"/> 
 
                                              </div>
                                              <div class="mt-repeater-input">
                                                 <label class="control-label">Room Description</label>
                                                 <br/>
-                                                <textarea class="form-control" name="r_desc[]" id="r_desc[]"/></textarea> 
+                                                <textarea class="form-control" name="r_desc" id="r_desc"/><?php echo set_value('r_desc',$editdata['r_desc']);?></textarea> 
                                              </div>
                                             
                                              <!--<div class="mt-repeater-input">
@@ -428,31 +438,25 @@
                                     <h3 class="form-section" style="margin-left:20px;"><strong>Project Milestone</strong></h3>
                           
                                      <a href="javascript:;" style="margin-left:20px;" data-repeater-create class="btn btn-success mt-repeater-add">
-                                       <i class="fa fa-plus"></i> Add More Items</a><br><br>
+                                       <i class="fa fa-plus"></i> Add Milestone</a><br><br>
 
                                        <div data-repeater-list="" style="margin-left:20px;">
 
                                           <div data-repeater-item class="mt-repeater-item">
                                              <!-- jQuery Repeater Container -->
-                                             <div class="mt-repeater-input">
+                                            
+                                             <div class="mt-repeater-input mt-repeater-textarea">
                                                 <label class="control-label">Milestone Name</label>
                                                 <br/>
-                                                <select name="m_name[]" id="m_name" multiple class="form-control">
+                                                <input type="text" name="m_name[]" id="m_name" class="form-control">
+                                             </div>
 
-                                                 <?php if(is_array($work_items) && count($work_items)): 
-                                                     foreach($work_items as $key2=>$value2):
-                                                 ?>
-                                                   <option value="<?php echo $value2['id']; ?>"><?php echo $value2['work_name']; ?></option>
-                                                <?php endforeach;endif; ?>   
-                                                </select>                                             
-                                             </div>
-                                             <div class="mt-repeater-input">
-                                                <label class="control-label">Contractor</label>
+                                             <div class="mt-repeater-input mt-repeater-textarea">
+                                                <label class="control-label">Milestone Description</label>
                                                 <br/>
-                                                <select name="m_cnt[]" id="m_cnt" class="form-control">
-                                                   
-                                                </select>
+                                                <textarea name="m_desc[]" id="m_desc" class="form-control" rows="2"></textarea>
                                              </div>
+
                                              <div class="mt-repeater-input">
                                                 <label class="control-label">Start Date</label>
                                                 <br/>
@@ -463,12 +467,28 @@
                                                 <br/>
                                                 <input class="input-group form-control form-control-inline date date-picker" size="16" type="text" name="m_e_d[]" data-date-format="dd/mm/yyyy" /> 
                                              </div>
-                                            
-                                             <div class="mt-repeater-input mt-repeater-textarea">
-                                                <label class="control-label">Milestone Description</label>
+                                              <div class="mt-repeater-input">
+                                                <label class="control-label">Work Items</label>
                                                 <br/>
-                                                <textarea name="m_desc[]" id="m_desc" class="form-control" rows="3"></textarea>
+                                                <select name="m_work_items[]" id="m_work_items" multiple class="form-control">
+
+                                                 <?php if(is_array($work_items) && count($work_items)): 
+                                                     foreach($work_items as $key2=>$value2):
+                                                 ?>
+                                                   <option value="<?php echo $value2['id']; ?>"><?php echo $value2['work_name']; ?></option>
+                                                <?php endforeach;endif; ?>   
+                                                </select>                                             
                                              </div>
+
+                                             <div class="mt-repeater-input">
+                                                <label class="control-label">Contractor</label>
+                                                <br/>
+                                                <select name="m_cnt[]" id="m_cnt" class="form-control">
+                                                   
+                                                </select>
+                                             </div>
+                                            
+                                             
                                              <div class="mt-repeater-input">
                                                 <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete">
                                                 <i class="fa fa-close"></i> Delete</a>
@@ -476,12 +496,14 @@
                                           </div>
 
                                          
+
+                                          
                                        </div>
 
                                        <div class="form-actions">
          											<div class="row">
          												<div class="col-md-offset-3 col-md-9">
-         													<button type="submit" class="btn green">Submit</button>
+         													<!--<button type="submit" class="btn green">Submit</button>-->
          													<a href="<?php echo site_url('project');?>" class="btn default">Cancel</a>
          												</div>
          											</div>
