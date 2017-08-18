@@ -1,4 +1,28 @@
-$(function(){
+$(function()
+{
+
+    $("input[name='a_c[]']").click(function()
+    {
+        if($(this).prop('checked'))
+        {
+            var cont_name = $(this).attr("data-contractor");
+
+            $("select").append("<option value='"+$(this).val()+"'>"+cont_name+"</option>");
+        }
+        else
+        {
+            $("select [value='"+$(this).val()+"']").remove();
+        }
+    });
+
+    /*$(".mt-repeater-add").click(function()
+    {
+
+        var mt_repeater_div = $('.mt-repeater-cust-item').clone();
+
+        mt_repeater_div.insertAfter(".mt-repeater-cust-item");
+
+    });*/
 
 });	
 

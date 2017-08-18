@@ -5,13 +5,41 @@ require_once(COREPATH."controllers/Admin_controller.php");
 class Project extends Admin_Controller
 {
 
+    protected $_project_validation_rules = array (
+                 array('field' => 'first_name', 'label' => 'First Name', 'rules' => 'trim|required'),
+                 array('field' => 'last_name', 'label' => 'Last Name', 'rules' => 'trim|required'),
+                 array('field' => 'email', 'label' => 'Email', 'rules' => 'trim|required|valid_email'),
+                 array('field' => 'se_email', 'label' => 'Email', 'rules' => 'trim|valid_email'),
+                 array('field' => 'phone', 'label' => 'Phone', 'rules' => 'trim|required|numeric|max_length[12]|min_length[6]'),
+                 array('field' => 'se_phone', 'label' => 'Phone', 'rules' => 'trim|numeric|max_length[12]|min_length[6]'),
+                 array('field' => 'addr', 'label' => 'Address', 'rules' => 'trim|required'),
+                 array('field' => 'city', 'label' => 'City', 'rules' => 'trim|required'),
+                 array('field' => 'state', 'label' => 'State', 'rules' => 'trim|required'),
+                 array('field' => 'country', 'label' => 'Country', 'rules' => 'trim|required'),
+                 array('field' => 'zip_code', 'label' => 'Zipcode', 'rules' => 'trim|required'),
+                 array('field' => 'a_c[]','label' =>'Assign Contractor','rules' => 'trim|required'),
+                 array('field' => 'p_name','label' =>'Project Name','rules' => 'trim|required'),
+                 array('field' => 'p_s_d','label' =>'Project Start Date','rules' => 'trim|required|callback_compareDates'),
+                 array('field' => 'p_e_d','label' =>'Project End Date','rules' => 'trim|required|callback_compareDates'),
+                 array('field' => 'm_s_d[]','label' =>'Milestone Start Date','rules' => 'trim|callback_compareDates'),
+                 array('field' => 'm_e_d[]','label' =>'Milestone End Date','rules' => 'trim|callback_compareDates'),
+                 array('field' => 'p_addr1','label' =>'Project Address','rules' => 'trim|required'),
+                 array('field' => 'p_city','label' =>'Project City','rules' => 'trim|required'),
+                 array('field' => 'p_state','label' =>'Project State','rules' => 'trim|required'),
+                 array('field' => 'p_zip_code','label' =>'Project Zip Code','rules' => 'trim|required')
+            );
+
+
     function __construct()
     {
       parent::__construct();
+      
       if(!is_logged_in())
         redirect('login');
-      $this->load->model('tickets_model');
-    }      
+      
+      $this->load->model('projects_model');
+    }    
+
     public function index()
     {
     	$this->layout->add_javascripts(array('listing'));
@@ -32,11 +60,60 @@ class Project extends Admin_Controller
       $this->data['search_bar'] = $this->load->view('listing/search_bar', $this->data, TRUE);
       $this->data['listing'] = $listing;
       $this->data['grid'] = $this->load->view('listing/view', $this->data, TRUE);
-     	$this->layout->view('/frontend/project/index');
     }
 
-    public function add()
+    public function add($edit_id ='')
     {
+
+      $this->layout->add_stylesheets(array('components.min','bootstrap-datepicker3.min'));
+      
+      $this->layout->add_javascripts(array('jquery.repeater','bootstrap-datepicker.min','app.min','form-repeater.min','components-date-time-pickers.min'));
+
+      $this->data['contractor_info'] = $this->projects_model->get_data("contractor",$where=array('active'=>'Y'),'id,company_name')->result_array();
+      
+      $this->data['work_items'] = $this->projects_model->get_data("work_items",$where=array('active'=>'Y'),'id,work_name')->result_array();
+
+      $this->data['country'] = $this->projects_model->get_data("countries",$where=array(),'code,name')->result_array();
+
+      $this->data['state'] = $this->projects_model->get_data("states",$where=array(),'state_code,state_name')->result_array();
+     
+      $this->form_validation->set_rules($this->_project_validation_rules);
+      
+      $this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+
+      if ($this->form_validation->run())
+      {
+      }
+      
+        if($edit_id)
+        {
+          $ins_data['updated_id']       = get_user_data()['id'];
+          
+          $ins_data['updated_date'] = date('Y-m-d H:i:s'); 
+          
+          $this->contractor_model->update(array("id" => $edit_id),$ins_data);
+          
+          $msg = 'Contractor updated successfully';
+        }
+
+        else if($this->input->post()) 
+        { 
+            $this->data['editdata'] = $_POST;
+            $this->data['title']     = "ADD PROJECT";
+            $this->data['crumb']   = "Add";
+            $this->data['editdata']['id'] = $edit_id != ''?$edit_id:'';
+        }
+
+        else
+        {  
+          $this->data['title']     = "ADD projects_model";
+          $this->data['crumb']   = "Add";
+          $this->data['editdata'] = array("first_name" => "","last_name"=>"","email"=>"","phone"=>"","addr"=>"","city"=>"","state"=>"","country"=>"","zip_code"=>"","se_first_name" => "","se_last_name"=>"","se_email"=>"","se_phone"=>"","se_addr"=>"","se_city"=>"","se_state"=>"","se_country"=>"","se_zip_code"=>"","a_c"=>"","p_name"=>"","p_s_d"=>"","p_e_d"=>"","p_addr1"=>"","p_addr2"=>"","p_city"=>"","p_state"=>"","p_zip_code"=>"","r_name"=>"","r_no"=>"","r_desc"=>"");  
+              
+        }
+        
+        
+
       $this->layout->view('/frontend/project/add');
     }
 
@@ -140,6 +217,20 @@ class Project extends Admin_Controller
 
         echo $str;
         exit();    
+    }
+
+    function compareDates()
+    {
+      
+      $startDate = strtotime($this->input->post('p_s_d'));
+      
+      $endDate = strtotime($this->input->post('p_e_d'));
+      
+      if($startDate > $endDate)
+      {
+        $this->form_validation->set_message('compareDates','Your start date must be earlier than your end date');
+        return false;
+      }
     }
 
   
