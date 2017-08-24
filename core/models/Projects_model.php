@@ -30,26 +30,24 @@ class Projects_model extends App_model
     return parent::listing();
   }
 
-   function get_data($table_name,$where,$field_name)
-   { 
-        if(count($where))
-        {
-            if($field_name!='')
-                $this->db->select($field_name); 
+  function get_data($table_name,$where,$field_name)
+  { 
+    
+    if(count($where))
+    {
+      if($field_name!='')
+        $this->db->select($field_name); 
           
-            $result = $this->db->get_where($table_name,$where);
-        }
-      else
-      {
-          if($field_name!='')
-                $this->db->select($field_name); 
-
-          $result = $this->db->get($table_name);
-      }
-          
-      return $result;
+      $result = $this->db->get_where($table_name,$where);
     }
+    else
+    {
+      if($field_name!='')
+        $this->db->select($field_name); 
 
-
+      $result = $this->db->get($table_name);
+    }
+    return $result;
+  }
 }
 ?>

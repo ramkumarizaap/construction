@@ -1,28 +1,29 @@
 <?php
 
+//echo "<pre>";print_r(form_error());die;
 //echo "<pre>";print_r($editdata);die;
 ?>
 <div class="page-content-wrapper">
-		<div class="page-content">
-			<!-- BEGIN PAGE HEADER-->
-			<h3 class="page-title">
-			 Add Project
-			</h3>
-			<div class="page-bar">
-				 <?php echo set_breadcrumb(); ?>
-			</div>
-			<!-- END PAGE HEADER-->
-			<!-- BEGIN PAGE CONTENT-->
-			<div class="row">
-				<div class="col-md-12 ">
-					<!-- BEGIN SAMPLE FORM PORTLET-->
-					<div class="portlet box green ">
-						<div class="portlet-title">
-							<div class="caption">
-								<i class="fa fa-table"></i> Add Project Form
-							</div>
-						</div>
-						 <div class="portlet-body form">
+      <div class="page-content">
+         <!-- BEGIN PAGE HEADER-->
+         <h3 class="page-title">
+          Add Project
+         </h3>
+         <div class="page-bar">
+             <?php echo set_breadcrumb(); ?>
+         </div>
+         <!-- END PAGE HEADER-->
+         <!-- BEGIN PAGE CONTENT-->
+         <div class="row">
+            <div class="col-md-12 ">
+               <!-- BEGIN SAMPLE FORM PORTLET-->
+               <div class="portlet box green ">
+                  <div class="portlet-title">
+                     <div class="caption">
+                        <i class="fa fa-table"></i> Add Project Form
+                     </div>
+                  </div>
+                   <div class="portlet-body form">
                         <!-- BEGIN FORM-->
                         <form action="#" class="mt-repeater form-horizontal" name="add_project" id="add_new_project" method="post">
                            <div class="form-body">
@@ -310,7 +311,7 @@
 
                               <div>
                                  <div>
-                                    <div class="mt-repeater-input mt-checkbox-inline">
+                                    <div class="mt-repeater-input mt-checkbox-inline <?php echo (form_error('a_c[]'))?'has-error':'';?>">
                                          <label class="control-label">Contractor<span class="required">*</span></label>
                                          <br>
 
@@ -323,16 +324,15 @@
                                          ?>
                                          <label class="mt-checkbox">
                                              <input type="checkbox" name="a_c[]" id="inlineCheckbox<?php echo $value['id']; ?>" value="<?php echo $value['id']; ?>" data-contractor="<?php echo $value['company_name']; ?>" <?php echo (in_array($value['id'],$is_cnt_list))?"checked":""; ?>> <?php echo $value['company_name']; ?>
+                                             <input type="hidden" name="a_c_name[]" value="<?php echo $value['company_name']; ?>">
                                              <span></span>
                                          </label>
                                         <?php endforeach; endif; ?>
-                                        <?php echo form_error('a_c'); ?>
+                                        <?php echo form_error('a_c[]'); ?>
                                      </div>
                                  </div>
                               </div>
 
-                             
-                              
                               <!--/row-->
                               <h3 class="form-section"><strong>Project Location</strong></h3>
                               <!--/row-->
@@ -400,124 +400,331 @@
 
                            <h3 class="form-section" style="margin-left:20px;"><strong>Room Number</strong></h3>
                           
-                                     <!--<a href="javascript:;" style="margin-left:20px;" data-repeater-create class="btn btn-success mt-repeater-add">
-                                       <i class="fa fa-plus"></i> Add More Items</a><br><br>-->
+                           <a href="javascript:;" style="margin-left:20px;"  class="btn btn-success mt-repeater-add2">
+                           <i class="fa fa-plus"></i> Add More Items</a><br><br>
 
-                                       <div style="margin-left:20px;">
+                           <?php
 
-                                          <div class="mt-repeater-item">
-                                             <!-- jQuery Repeater Container -->
-                                             <div class="mt-repeater-input">
-                                                <label class="control-label">Room Name</label>
-                                                <br/>
-                                                <input class="input-group form-control" size="16" type="text"  name="r_name" value="<?php echo set_value('r_name',$editdata['r_name']);?>"/> 
-                                           
-                                             </div>
-                                             <div class="mt-repeater-input">
-                                                <label class="control-label">Room Number</label>
-                                                <br/>
-                                                <input class="input-group form-control" size="16" type="text"  name="r_no" value="<?php echo set_value('r_no',$editdata['r_no']);?>"/> 
+                              if(isset($editdata['r_name']))
+                              {
+                                 
 
-                                             </div>
-                                             <div class="mt-repeater-input">
-                                                <label class="control-label">Room Description</label>
-                                                <br/>
-                                                <textarea class="form-control" name="r_desc" id="r_desc"/><?php echo set_value('r_desc',$editdata['r_desc']);?></textarea> 
-                                             </div>
-                                            
-                                             <!--<div class="mt-repeater-input">
-                                                <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete">
-                                                <i class="fa fa-close"></i> Delete</a>
-                                             </div>-->
-                                          </div>
-                                          
-                                          
-                                       </div>
+                                 $r_name = (isset($editdata['r_name']) && is_array($editdata['r_name']))?isset($editdata['r_name']):'';
+
+                                 $r_no = (isset($editdata['r_no']) && is_array($editdata['r_no']))?$editdata['r_no'][0]:'';
+
+                                 $r_desc2 = (isset($editdata['r_desc_dtl']) && is_array($editdata['r_desc_dtl']))?$editdata['r_desc_dtl'][0]:'';
+
+
+
+                              }
+
+                              
+                                
+                           ?>
+
+                           <div style="margin-left:20px;">
+
+                              <div data-repeater-item class="mt-repeater-item mt-repeater-cust-item">
+                                 <!-- jQuery Repeater Container -->
+                                 <div class="mt-repeater-input <?php echo (form_error('r_name[]'))?'has-error':'';  ?>">
+                                    <label class="control-label">Room Name</label>
+                                    <br/>
+                                    <input class="input-group form-control" size="16" type="text"  name="r_name[]" value="<?php echo $r_name; ?>"/> 
+                                   <?php echo (form_error('r_name[]'))?form_error('r_name[]'):'';  ?>
+                                 </div>
+                                 <div class="mt-repeater-input <?php echo (form_error('r_no[]'))?'has-error':'';  ?>">
+                                    <label class="control-label">Room Number</label>
+                                    <br/>
+                                    
+                                    <input class="input-group form-control" size="16" type="text"  name="r_no[]" value="<?php echo $r_no; ?>"/>
+
+                                    <?php echo (form_error('r_no[]'))?form_error('r_no[]'):'';  ?>
+
+                                 </div>
+                                 <div class="mt-repeater-input">
+                                    <label class="control-label">Room Description</label>
+                                    <br/>
+                                 <textarea class="form-control" name="r_desc_dtl[]" id="r_desc_dtl"/><?php echo $r_desc2; ?></textarea> 
+                                 </div>
+                                
+                                 <div class="mt-repeater-input">
+                                    <a href="javascript:;" data-repeater-delete2 class="btn btn-danger mt-repeater-delete">
+                                    <i class="fa fa-close"></i> Delete</a>
+                                 </div>
+                              </div>
+
+                              <div class="mt-repeater-room-dtl">
+
+                               <?php $k=1;if(isset($editdata['r_name'][$k]) && count($editdata['r_name'])>0): 
+
+                                      $room_arr_ele = array_shift($editdata['r_name']); 
+                                      
+                                      foreach($editdata['r_name'] as $key=>$value):
+                                 ?>
+
+                                <div data-repeater-item class="mt-repeater-item mt-repeater-cust-item">
+                                 <!-- jQuery Repeater Container -->
+                                 <div class="mt-repeater-input">
+                                    <label class="control-label">Room Name</label>
+                                    <br/>
+                                    <input class="input-group form-control" size="16" type="text"  name="r_name[]" value="<?php echo $value; ?>"/> 
+                                 </div>
+
+                                 <div class="mt-repeater-input">
+                                    <label class="control-label">Room Number</label>
+                                    <br/>
+                                    
+                                    <input class="input-group form-control" size="16" type="text"  name="r_no[]" value="<?php echo $editdata['r_no'][$k]; ?>"/>
+
+
+                                 </div>
+                                 
+                                 <div class="mt-repeater-input">
+                                    <label class="control-label">Room Description</label>
+                                    <br/>
+                                 <textarea class="form-control" name="r_desc_dtl[]" id="r_desc_dtl"/><?php echo $editdata['r_desc_dtl'][$k]; ?></textarea> 
+                                 </div>
+                                 <div class="mt-repeater-input">
+                                    <a href="javascript:;" data-repeater-delete2 class="btn btn-danger mt-repeater-delete">
+                                    <i class="fa fa-close"></i> Delete</a>
+                                 </div>
+
+                                </div>  
+                              <?php endforeach;endif; ?>
+                               
+                              </div>
+                           </div>
 
                            
-                                    <h3 class="form-section" style="margin-left:20px;"><strong>Project Milestone</strong></h3>
-                          
-                                     <a href="javascript:;" style="margin-left:20px;" data-repeater-create class="btn btn-success mt-repeater-add">
-                                       <i class="fa fa-plus"></i> Add Milestone</a><br><br>
+                           <h3 class="form-section" style="margin-left:20px;"><strong>Project Milestone</strong></h3>
+                 
+                            <a href="javascript:;" style="margin-left:20px;" data-repeater-create class="btn btn-success mt-repeater-add">
+                              <i class="fa fa-plus"></i> Add Milestone</a><br><br>
 
-                                       <div data-repeater-list="" style="margin-left:20px;">
+                              <?php
 
-                                          <div data-repeater-item class="mt-repeater-item">
-                                             <!-- jQuery Repeater Container -->
-                                            
-                                             <div class="mt-repeater-input mt-repeater-textarea">
-                                                <label class="control-label">Milestone Name</label>
-                                                <br/>
-                                                <input type="text" name="m_name[]" id="m_name" class="form-control">
-                                             </div>
+                                if(isset($editdata['group-a']))
+                                {
+                                   $m_arr = $editdata['group-a'];
 
-                                             <div class="mt-repeater-input mt-repeater-textarea">
-                                                <label class="control-label">Milestone Description</label>
-                                                <br/>
-                                                <textarea name="m_desc[]" id="m_desc" class="form-control" rows="2"></textarea>
-                                             </div>
+                                   $m_name = isset($m_arr[0]['m_name'])?$m_arr[0]["m_name"]:'';
 
-                                             <div class="mt-repeater-input">
-                                                <label class="control-label">Start Date</label>
-                                                <br/>
-                                                <input class="input-group form-control form-control-inline date date-picker" size="16" type="text"  name="m_s_d[]" data-date-format="dd/mm/yyyy" /> 
-                                             </div>
-                                             <div class="mt-repeater-input">
-                                                <label class="control-label">End Date</label>
-                                                <br/>
-                                                <input class="input-group form-control form-control-inline date date-picker" size="16" type="text" name="m_e_d[]" data-date-format="dd/mm/yyyy" /> 
-                                             </div>
-                                              <div class="mt-repeater-input">
-                                                <label class="control-label">Work Items</label>
-                                                <br/>
-                                                <select name="m_work_items[]" id="m_work_items" multiple class="form-control">
+                                   $m_desc = isset($m_arr[0]['m_desc'])?$m_arr[0]["m_desc"]:'';
 
-                                                 <?php if(is_array($work_items) && count($work_items)): 
-                                                     foreach($work_items as $key2=>$value2):
-                                                 ?>
-                                                   <option value="<?php echo $value2['id']; ?>"><?php echo $value2['work_name']; ?></option>
-                                                <?php endforeach;endif; ?>   
-                                                </select>                                             
-                                             </div>
+                                   $m_s_d = isset($m_arr[0]['m_s_d'])?$m_arr[0]["m_s_d"]:'';
+                                   
+                                   $m_e_d = isset($m_arr[0]['m_e_d'])?$m_arr[0]["m_e_d"]:'';
+                                }
+                                else
+                                {
+                                 $m_arr = array();
+                                 $m_name=$m_desc=$m_s_d=$m_e_d='';
+                                } 
+                                
+                              ?>
 
-                                             <div class="mt-repeater-input">
-                                                <label class="control-label">Contractor</label>
-                                                <br/>
-                                                <select name="m_cnt[]" id="m_cnt" class="form-control">
-                                                   
-                                                </select>
-                                             </div>
-                                            
+                              <div data-repeater-list="group-a" style="margin-left:20px;">
+
+                                 <div data-repeater-item class="mt-repeater-item">
+                                    <!-- jQuery Repeater Container -->
+                                   
+                                    <div class="mt-repeater-input mt-repeater-textarea <?php echo (form_error('group-a[0][m_name]') && $m_name=='')?'has-error':'';?>">
+                                       <label class="control-label">Milestone Name</label>
+                                       <br/>
+                                       <input type="text" name="m_name" id="m_name" class="form-control" value="<?php echo set_value('m_name',$m_name);?>">
+                                        <?php echo (form_error('group-a[0][m_name]') && $m_name=='')?form_error('group-a[0][m_name]'):'';  ?>
+                                    </div>
+
+                                    <div class="mt-repeater-input mt-repeater-textarea">
+                                       <label class="control-label">Milestone Description</label>
+                                       <br/>
+                                       <textarea name="m_desc" id="m_desc" class="form-control" rows="2"><?php echo set_value('m_desc',$m_desc);?></textarea>
+                                    </div>
+
+                                    <div class="mt-repeater-input <?php echo (form_error('group-a[0][m_s_d]'))?'has-error':'';?>">
+                                       <label class="control-label">Start Date</label>
+                                       <br/>
+                                       <input class="input-group form-control form-control-inline date date-picker" size="16" type="text"  name="m_s_d"  value="<?php echo set_value('m_name',$m_s_d);?>"/> 
+                                       <?php echo (form_error('group-a[0][m_s_d]') )?form_error('group-a[0][m_s_d]'):'';  ?>
+                                    </div>
+                                    <div class="mt-repeater-input <?php echo (form_error('group-a[0][m_e_d]'))?'has-error':'';?>">
+                                       <label class="control-label">End Date</label>
+                                       <br/>
+                                       <input class="input-group form-control form-control-inline date date-picker" size="16" type="text" name="m_e_d" value="<?php echo set_value('m_e_d',$m_e_d);?>"/> 
+                                        <?php echo (form_error('group-a[0][m_e_d]'))?form_error('group-a[0][m_e_d]'):'';  ?>
+                                    </div>
+                                     <div class="mt-repeater-input <?php echo (form_error('group-a[0][m_work_items]') && !isset($m_arr[0]['m_work_items']))?'has-error':'';?>">
+                                       <label class="control-label">Work Items</label>
+                                       <br/>
+                                       <select name="m_work_items" id="m_work_items" multiple class="form-control">
+
+                                        <?php if(is_array($work_items) && count($work_items)): 
+                                            $selected='';
+
+                                            foreach($work_items as $key2=>$value2):
                                              
-                                             <div class="mt-repeater-input">
-                                                <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete">
-                                                <i class="fa fa-close"></i> Delete</a>
-                                             </div>
-                                          </div>
+                                             if(isset($editdata['group-a']))
+                                             {
+                                                $work_item = $m_arr[0]['m_work_items'];
 
-                                         
+                                                $work_item= implode(',',$work_item);
 
-                                          
-                                       </div>
+                                                $final_work_item= explode(',',$work_item);
 
-                                       <div class="form-actions">
-         											<div class="row">
-         												<div class="col-md-offset-3 col-md-9">
-         													<!--<button type="submit" class="btn green">Submit</button>-->
-         													<a href="<?php echo site_url('project');?>" class="btn default">Cancel</a>
-         												</div>
-         											</div>
-         										</div>
+                                                $m_cnt = $m_arr[0]['m_cnt'];
+                                                
+                                                $selected = (in_array($value2['id'],$final_work_item))?"selected='selected'":"";  
+
+                                             }
+                                        ?>
+                                          <option value="<?php echo $value2['id']; ?>" <?php echo $selected; ?>><?php echo $value2['work_name']; ?></option>
+                                       
+                                       <?php endforeach;endif; ?>  
+                                       
+                                       </select>  
+
+                                    <?php echo (form_error('group-a[0][m_work_items]') && !isset($work_item))?form_error('group-a[0][m_work_items]'):''; ?> 
+                                 
+                                    </div>
+
+                                    <div class="mt-repeater-input <?php echo (form_error('group-a[0][m_cnt]') && $m_cnt=='')?'has-error':'';?>">
+                                       <label class="control-label">Contractor</label>
+                                       <br/>
+                                       <select name="m_cnt" id="m_cnt" class="form-control">
+                                          <?php if(isset($editdata['a_c']) && count($editdata['a_c']) && is_array($editdata['a_c'])):
+                                              $a_c_name = isset($editdata['a_c_name'])?$editdata['a_c_name']:'';
+
+                                              foreach($editdata['a_c'] as $key6=>$value6):
+
+                                                $final_m_cnt= explode(',',$m_cnt);
+
+                                                $selected = (in_array($value6,$final_m_cnt))?"selected='selected'":"";  
+
+                                          ?>
+                                           <option value="<?php echo $value6; ?>" <?php echo $selected; ?>><?php echo $a_c_name[$key6]; ?></option>
+                                          <?php  endforeach;endif;
+                                          ?>
+                                       </select>
+                                        <?php echo (form_error('group-a[0][m_cnt]') && $m_cnt=='')?form_error('group-a[0][m_cnt]'):'';?>
+                                    </div>
+                                    <div class="mt-repeater-input">
+                                       <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete">
+                                       <i class="fa fa-close"></i> Delete</a>
+                                    </div>
+                                 </div>
+
+                                 <?php $i=1;$j=0;if(isset($editdata['group-a'][$i]) && count($editdata['group-a'])>0): 
+
+                                       $ml_arr_ele = array_shift($editdata['group-a']); 
+
+                                       foreach($editdata['group-a'] as $key=>$value):
+                                 ?>
+
+                                 <div data-repeater-item class="mt-repeater-item">
+                                    <!-- jQuery Repeater Container -->
+                                   
+                                    <div class="mt-repeater-input mt-repeater-textarea <?php echo (form_error('group-a['.$i.'][m_name]') && $value['m_name']=='')?'has-error':'';?>">
+                                       <label class="control-label">Milestone Name</label>
+                                       <br/>
+                                       <input type="text" name="m_name" id="m_name" class="form-control" value="<?php echo set_value('m_name',$value["m_name"]);?>">
+                                        <?php echo (form_error('group-a['.$i.'][m_name]') && $value['m_name']=='')?form_error('group-a['.$i.'][m_name]'):'';?>
+                                    </div>
+
+                                    <div class="mt-repeater-input mt-repeater-textarea">
+                                       <label class="control-label">Milestone Description</label>
+                                       <br/>
+                                       <textarea name="m_desc" id="m_desc" class="form-control" rows="2"><?php echo set_value('m_name',$value["m_desc"]);?></textarea>
+                                    </div>
+
+                                    <div class="mt-repeater-input <?php echo (form_error('group-a['.$i.'][m_s_d]'))?'has-error':'';?>">
+                                       <label class="control-label">Start Date</label>
+                                       <br/>
+                                       <input class="input-group form-control form-control-inline date date-picker" size="16" type="text"  name="m_s_d"  value="<?php echo set_value('m_name',$value["m_s_d"]);?>"/> 
+                                       <?php echo (form_error('group-a['.$i.'][m_s_d]') )?form_error('group-a['.$i.'][m_s_d]'):'';?>
+                                    </div>
+
+                                    <div class="mt-repeater-input <?php echo (form_error('group-a['.$i.'][m_e_d]'))?'has-error':'';?>">
+                                       <label class="control-label">End Date</label>
+                                       <br/>
+                                       <input class="input-group form-control form-control-inline date date-picker" size="16" type="text" name="m_e_d"  value="<?php echo set_value('m_name',$value["m_e_d"]);?>"/> 
+                                       <?php echo (form_error('group-a['.$i.'][m_e_d]') )?form_error('group-a['.$i.'][m_e_d]'):'';?>
+                                    </div>
+                                    <div class="mt-repeater-input <?php echo (form_error('group-a['.$i.'][m_work_items]') && !isset($value['m_work_items']))?'has-error':'';?>">
+                                       <label class="control-label">Work Items</label>
+                                       <br/>
+                                       <select name="m_work_items" id="m_work_items" multiple class="form-control">
+
+                                        <?php if(is_array($work_items) && count($work_items)):
+
+                                             foreach($work_items as $key2=>$value2):
+                                             
+                                             $work_item2= implode(',',$value['m_work_items']);
+                                             
+                                             $final_work_item2= explode(',',$work_item2);
+                                             
+                                             $selected = (in_array($value2['id'],$final_work_item2))?"selected='selected'":"";  
+                                        ?>
+
+                                          <option value="<?php echo $value2['id']; ?>" <?php echo $selected; ?>><?php echo $value2['work_name']; ?></option>
+                                       
+                                       <?php endforeach;endif; ?>  
+                                       
+                                       </select>   
+                                       
+                                       <?php echo (form_error('group-a['.$i.'][m_work_items]') && !isset($work_item2))?form_error('group-a['.$i.'][m_work_items]'):''; ?> 
+                                 
+                                    </div>
+
+                                    <div class="mt-repeater-input <?php echo ((!isset($value['m_cnt']) || $value['m_cnt']==''))?'has-error':'';?>">
+                                       <label class="control-label">Contractor</label>
+                                       <br/>
+                                       <select name="m_cnt" id="m_cnt" class="form-control">
+                                          <?php if(isset($editdata['a_c']) && count($editdata['a_c']) && is_array($editdata['a_c'])):
+                                              $a_c_name2 = isset($editdata['a_c_name'])?$editdata['a_c_name']:'';
+                                              foreach($editdata['a_c'] as $key7=>$value7):
+
+                                                $m_cnt2 = $value['m_cnt'];
+
+                                                $final_m_cnt2= explode(',',$m_cnt2);
+                                                
+                                                $selected = (in_array($value7,$final_m_cnt2))?"selected='selected'":"";  
+
+                                          ?>
+                                           <option value="<?php echo $value7; ?>" <?php echo $selected; ?>><?php echo $a_c_name2[$key7]; ?></option>
+                                          <?php  endforeach;endif;
+                                          ?>
+                                       </select>
+                                        <?php echo ((!isset($value['m_cnt']) || $value['m_cnt']))?form_error('group-a['.$i.'][m_cnt]'):'';?> 
+                                    </div>
+                                   
+                                    
+                                    <div class="mt-repeater-input">
+                                       <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete">
+                                       <i class="fa fa-close"></i> Delete</a>
+                                    </div>
+                                 </div>
+                                 <?php ++$i; endforeach;endif; ?> 
+                              </div>
+
+                              <div class="form-actions">
+                                 <div class="row">
+                                    <div class="col-md-offset-3 col-md-9">
+                                       <button type="submit" class="btn green">Submit</button>
+                                       <a href="<?php echo site_url('project');?>" class="btn default">Cancel</a>
+                                    </div>
+                                 </div>
+                              </div>
 
                         </form>
                         <!-- BEGIN PAGE TITLE-->
                        
                      </div>
-					</div>
-				</div>
-			</div>
-			<!-- END PAGE CONTENT -->
-		</div>
-	</div>
+               </div>
+            </div>
+         </div>
+         <!-- END PAGE CONTENT -->
+      </div>
+   </div>
 
 

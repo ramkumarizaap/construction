@@ -825,7 +825,8 @@ $.fn.repeater = function (fig) {
         };
 
         var $itemTemplate = $list.find('[data-repeater-item]')
-                                 .first().clone().hide();
+                                 .first();
+
 
         var $firstDeleteButton = $(this).find('[data-repeater-item]').first()
                                         .find('[data-repeater-delete]');
@@ -881,8 +882,14 @@ $.fn.repeater = function (fig) {
                     /*var newName = name + '[]' +
                         ($input.is(':checkbox') || $input.attr('multiple') ? '[]' : '');*/
 
+                    /*if(name=="m_work_items")
+                        var newName = name + '['+index+'][]';
+                    else 
+                        var newName = name ;  */
 
-                    var newName = name ;    
+                     var newName = groupName + '[' + index + '][' + name + ']' +
+                        ($input.is(':checkbox') || $input.attr('multiple') ? '[]' : '');
+
 
                     $input.attr('name', newName);
 
@@ -985,7 +992,7 @@ $.fn.repeater = function (fig) {
             });
         });
 
-        $('[data-repeater-delete]').on('click',function () {
+        $(document).on('click','[data-repeater-delete2]',function () {
             var self = $(this).closest('[data-repeater-item]').get(0);
             hide.call(self, function () {
                 $(self).remove();

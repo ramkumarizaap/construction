@@ -26,13 +26,18 @@ class Login extends Admin_Controller
 
             if($this->login_model->login($form['email'], $form['password']))
             {
-                redirect("contractors");
+                redirect("project/add");
             }else{
 
                 $this->session->set_flashdata("login_fail1","Invalid Username or Password",TRUE);
             }
             
         }
+
+        if(is_logged_in()) 
+        {
+          redirect("project/add");
+        } 
         
         $this->layout->view("login/index");
         

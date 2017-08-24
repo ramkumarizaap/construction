@@ -1,6 +1,7 @@
 $(function()
 {
 
+
     $("input[name='a_c[]']").click(function()
     {
         if($(this).prop('checked'))
@@ -15,14 +16,14 @@ $(function()
         }
     });
 
-    /*$(".mt-repeater-add").click(function()
+    $(".mt-repeater-add2").click(function()
     {
 
-        var mt_repeater_div = $('.mt-repeater-cust-item').clone();
+        var mt_repeater_div = $('.mt-repeater-cust-item').first().clone();
 
-        mt_repeater_div.insertAfter(".mt-repeater-cust-item");
+        $(".mt-repeater-room-dtl").append(mt_repeater_div);
 
-    });*/
+    });
 
 });	
 
