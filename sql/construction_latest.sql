@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 18, 2017 at 03:11 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Generation Time: Aug 28, 2017 at 09:07 AM
+-- Server version: 10.1.25-MariaDB
+-- PHP Version: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,6 +21,123 @@ SET time_zone = "+00:00";
 --
 -- Database: `construction`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_users`
+--
+
+CREATE TABLE `admin_users` (
+  `id` int(11) NOT NULL,
+  `name` varchar(155) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `password` varchar(150) NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `admin_users`
+--
+
+INSERT INTO `admin_users` (`id`, `name`, `email`, `password`, `created_date`) VALUES
+(1, 'Admin', 'admin@gmail.com', '0192023a7bbd73250516f069df18b500', '2017-08-14 11:31:06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client_contacts`
+--
+
+CREATE TABLE `client_contacts` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(245) NOT NULL,
+  `last_name` varchar(245) NOT NULL,
+  `email` varchar(245) NOT NULL,
+  `phone` int(11) NOT NULL,
+  `address` text NOT NULL,
+  `city` varchar(245) NOT NULL,
+  `state` varchar(245) NOT NULL,
+  `country` varchar(245) NOT NULL,
+  `zip` varchar(45) NOT NULL,
+  `created_id` int(11) NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `client_contacts`
+--
+
+INSERT INTO `client_contacts` (`id`, `first_name`, `last_name`, `email`, `phone`, `address`, `city`, `state`, `country`, `zip`, `created_id`, `created_date`, `updated_date`) VALUES
+(1, 'Gavaskar', 'Ram', 'gavaskarizaap@gmail.com', 1232123212, 'chennai, valasaravakkam', 'chennai', 'AZ', 'AL', '600040', 1, '2017-08-22 10:35:54', '2017-08-22 14:05:54'),
+(2, 'Gavaskar2', 'Ram2', 'gavaskarizaap@gmail.com', 1232123212, 'chennai', 'chennai', 'CA', 'AS', '60004', 1, '2017-08-22 10:35:55', '2017-08-22 14:05:55'),
+(3, 'Gavaskar', 'Ram', 'gavaskarizaap@gmail.com', 1232123212, 'chennai, valasaravakkam', 'chennai', 'AZ', 'AL', '600040', 1, '2017-08-22 10:36:32', '2017-08-22 14:06:32'),
+(4, 'Gavaskar2', 'Ram2', 'gavaskarizaap@gmail.com', 1232123212, '', 'chennai', 'CA', 'AS', '60004', 3, '2017-08-22 10:36:32', '2017-08-22 14:06:32'),
+(5, 'Gavaskar', 'Ram', 'gavaskarizaap@gmail.com', 1232123212, 'chennai, valasaravakkam', 'chennai', 'AZ', 'AL', '600040', 1, '2017-08-22 10:37:18', '2017-08-22 14:07:18'),
+(6, 'Gavaskar2', 'Ram2', 'gavaskarizaap@gmail.com', 1232123212, '', 'chennai', 'CA', 'AS', '60004', 5, '2017-08-22 10:37:18', '2017-08-22 14:07:18'),
+(7, 'sdfasdf', 'asdfasdf', 'adsfsadf@gmail.com', 1232123212, 'sdfasdf', 'sadfasdf', 'AL', 'AF', '123212', 1, '2017-08-22 10:56:47', '2017-08-22 14:26:47'),
+(8, '', '', 'adsfsadf@gmail.com', 0, '', '', 'AL', 'AF', '', 7, '2017-08-22 10:56:47', '2017-08-22 14:26:47');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contractor`
+--
+
+CREATE TABLE `contractor` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(155) NOT NULL,
+  `last_name` varchar(155) NOT NULL,
+  `username` varchar(155) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `org_pwd` varchar(50) NOT NULL,
+  `company_name` varchar(150) NOT NULL,
+  `active` enum('Y','N') NOT NULL,
+  `office_phone` varchar(15) NOT NULL,
+  `cell_phone` varchar(15) NOT NULL,
+  `email1` varchar(155) NOT NULL,
+  `email2` varchar(155) NOT NULL,
+  `address1` text NOT NULL,
+  `address2` text NOT NULL,
+  `city` varchar(200) NOT NULL,
+  `state` varchar(50) NOT NULL,
+  `zip` int(10) NOT NULL,
+  `created_id` int(11) NOT NULL,
+  `updated_id` int(11) NOT NULL,
+  `created_date` datetime NOT NULL,
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `contractor`
+--
+
+INSERT INTO `contractor` (`id`, `first_name`, `last_name`, `username`, `password`, `org_pwd`, `company_name`, `active`, `office_phone`, `cell_phone`, `email1`, `email2`, `address1`, `address2`, `city`, `state`, `zip`, `created_id`, `updated_id`, `created_date`, `updated_date`) VALUES
+(1, 'saravana', 'muthu', 'saravana90', '312dc6ec7c900fb9017bf43c6b1f81bb', 'sara123', 'Greenways limted', 'Y', '9566565652', '9566565652', 'saravanamot90@gmail.com', 'saravanamot90@gmail.com', '1st street', 'valasai', 'chennai', 'TN', 678565, 1, 1, '2017-08-22 13:22:02', '2017-08-22 09:40:56');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contractor_inspection`
+--
+
+CREATE TABLE `contractor_inspection` (
+  `id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `contractor_id` int(11) NOT NULL,
+  `milestone_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `client_name` varchar(200) NOT NULL,
+  `end_client` varchar(200) NOT NULL,
+  `observations` longtext NOT NULL,
+  `complated_item` int(11) NOT NULL,
+  `room_no` int(11) NOT NULL,
+  `status` enum('PENDING','PROCESSING','COMPLETED') NOT NULL,
+  `signature` varchar(200) NOT NULL,
+  `created_date` datetime NOT NULL,
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -519,6 +638,108 @@ INSERT INTO `countries` (`id`, `code`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `inspection_images`
+--
+
+CREATE TABLE `inspection_images` (
+  `id` int(11) NOT NULL,
+  `inspection_id` int(11) NOT NULL,
+  `images` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `project`
+--
+
+CREATE TABLE `project` (
+  `id` int(11) NOT NULL,
+  `project_name` varchar(200) NOT NULL,
+  `start_date` date NOT NULL,
+  `complete_date` date NOT NULL,
+  `status` enum('PENDING','PROCESSING','COMPLETED','HOLD','CANCELLED') NOT NULL,
+  `client_contact1` int(11) NOT NULL,
+  `client_contact2` int(11) NOT NULL,
+  `blueprint` varchar(155) NOT NULL COMMENT 'blueprint file',
+  `project_address1` text NOT NULL,
+  `project_address2` text NOT NULL,
+  `project_city` varchar(245) NOT NULL,
+  `project_state` varchar(245) NOT NULL,
+  `project_zip_code` varchar(45) NOT NULL,
+  `created_id` int(11) NOT NULL,
+  `updated_id` int(11) NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `project`
+--
+
+INSERT INTO `project` (`id`, `project_name`, `start_date`, `complete_date`, `status`, `client_contact1`, `client_contact2`, `blueprint`, `project_address1`, `project_address2`, `project_city`, `project_state`, `project_zip_code`, `created_id`, `updated_id`, `created_date`, `updated_date`) VALUES
+(1, 'Test Project', '2017-08-01', '2017-08-08', 'PENDING', 1, 2, '', 'chennai', 'chennai', 'chennai', 'AL', '123212', 1, 0, '2017-08-22 10:35:55', '2017-08-22 14:05:55'),
+(2, 'Test Project2', '2017-08-01', '2017-08-08', 'PENDING', 3, 4, '', 'chennai', 'chennai', 'chennai', 'AL', '123212', 3, 0, '2017-08-22 10:36:32', '2017-08-22 14:06:32'),
+(3, 'Test Project2', '2017-08-01', '2017-08-08', 'PENDING', 5, 6, '', 'chennai', 'chennai', 'chennai', 'AL', '123212', 5, 0, '2017-08-22 10:37:19', '2017-08-22 14:07:19'),
+(4, 'gavaskar', '2017-08-09', '2017-08-24', 'PENDING', 7, 8, '', 'sadfasdf', '', 'sdfsdf', 'AL', '123212', 7, 0, '2017-08-22 10:56:47', '2017-08-22 14:26:47');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `project_contractors`
+--
+
+CREATE TABLE `project_contractors` (
+  `id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `contractor_id` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `project_contractors`
+--
+
+INSERT INTO `project_contractors` (`id`, `project_id`, `contractor_id`) VALUES
+(1, 1, '5,6'),
+(2, 1, '5,6'),
+(3, 1, '5,6'),
+(4, 1, '5,6');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `project_milestones`
+--
+
+CREATE TABLE `project_milestones` (
+  `id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `name` varchar(155) NOT NULL,
+  `description` text NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `work_items` text NOT NULL,
+  `status` enum('PENDING','PROCESSING','COMPLETED','HOLD') NOT NULL,
+  `contractor_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `project_milestones`
+--
+
+INSERT INTO `project_milestones` (`id`, `project_id`, `name`, `description`, `start_date`, `end_date`, `work_items`, `status`, `contractor_id`) VALUES
+(1, 1, 'Milestone1', 'Milestone desc1', '2017-08-01', '2017-08-09', '1,2', 'PENDING', 5),
+(2, 1, 'Milestone2', 'Milestone desc2', '2017-08-01', '2017-08-09', '3,4', 'PENDING', 6),
+(3, 2, 'Milestone1', 'Milestone desc1', '2017-08-01', '2017-08-09', '1,2', 'PENDING', 5),
+(4, 2, 'Milestone2', 'Milestone desc2', '2017-08-01', '2017-08-09', '3,4', 'PENDING', 6),
+(5, 3, 'Milestone1', 'Milestone desc1', '2017-08-01', '2017-08-09', '1,2', 'PENDING', 5),
+(6, 3, 'Milestone2', 'Milestone desc2', '2017-08-01', '2017-08-09', '3,4', 'PENDING', 6),
+(7, 4, 'Milestone1', '', '2017-08-01', '2017-08-16', '1,2', 'PENDING', 6),
+(8, 4, 'Milestone2', '', '2017-08-02', '2017-08-30', '2,3', 'PENDING', 5);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `states`
 --
 
@@ -599,6 +820,129 @@ INSERT INTO `states` (`id`, `country_code`, `state_code`, `state_name`) VALUES
 (63, 'CA', 'NU', 'Nunavut'),
 (64, 'CA', 'PE', 'Prince Edward Island'),
 (65, 'CA', 'YT', 'Yukon');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `work_items`
+--
+
+CREATE TABLE `work_items` (
+  `id` int(11) NOT NULL,
+  `work_name` varchar(155) NOT NULL,
+  `active` enum('Y','N') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `work_items`
+--
+
+INSERT INTO `work_items` (`id`, `work_name`, `active`) VALUES
+(1, 'Painting', 'Y'),
+(2, 'Door', 'Y'),
+(3, 'Window', 'Y'),
+(4, 'Flooring', 'Y'),
+(5, 'Baseboard', 'Y'),
+(6, 'Tiles', 'Y'),
+(7, 'Plumbing', 'Y');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admin_users`
+--
+ALTER TABLE `admin_users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `client_contacts`
+--
+ALTER TABLE `client_contacts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `contractor`
+--
+ALTER TABLE `contractor`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `contractor_inspection`
+--
+ALTER TABLE `contractor_inspection`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `inspection_images`
+--
+ALTER TABLE `inspection_images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `project`
+--
+ALTER TABLE `project`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `project_contractors`
+--
+ALTER TABLE `project_contractors`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `project_milestones`
+--
+ALTER TABLE `project_milestones`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `work_items`
+--
+ALTER TABLE `work_items`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admin_users`
+--
+ALTER TABLE `admin_users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `client_contacts`
+--
+ALTER TABLE `client_contacts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `contractor`
+--
+ALTER TABLE `contractor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `contractor_inspection`
+--
+ALTER TABLE `contractor_inspection`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `inspection_images`
+--
+ALTER TABLE `inspection_images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `project`
+--
+ALTER TABLE `project`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `project_contractors`
+--
+ALTER TABLE `project_contractors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

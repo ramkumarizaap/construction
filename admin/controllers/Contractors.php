@@ -66,54 +66,68 @@ class Contractors extends Admin_Controller
             $this->form_validation->set_rules('first_name','First Name','trim|required');
             $this->form_validation->set_rules('last_name','Last Name','trim|required');
             $this->form_validation->set_rules('email1','Primary Email','trim|required|valid_email|callback_check_email['.$edit_id.']');
+            $this->form_validation->set_rules('email2','Secondary Email','trim|valid_email');
             $this->form_validation->set_rules('office_phone','Office Phone','trim|required');
             $this->form_validation->set_rules('mobile_phone','Mobile Phone','trim|required');
             $this->form_validation->set_rules('address1','Address 1','trim|required');
+            $this->form_validation->set_rules('address2','Address 2','trim');
             $this->form_validation->set_rules('city','City','trim|required');
             $this->form_validation->set_rules('state','State','trim|required');
             $this->form_validation->set_rules('zipcode','Zipcode','trim|required');
             $this->form_validation->set_rules('enabled','Enabled','trim|required');
-            
+            $this->form_validation->set_rules('username','Username','trim|required');            
+            if(!$edit_id)
+              $this->form_validation->set_rules('password','Password','trim|required');
 
             $this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
                 
             if ($this->form_validation->run())
             {
+                $pwd = $this->input->post('password');
+
                 $ins_data = array();
                 $ins_data['company_name'] = $this->input->post('company_name');
-                $ins_data['first_name']         = $this->input->post('first_name');
-                $ins_data['last_name']         = $this->input->post('last_name');
-                $ins_data['email1']        = $this->input->post('email1');
-                $ins_data['email2']        = $this->input->post('email2');
-                $ins_data['username']        = strtolower($ins_data['first_name']).rand();
-                $ins_data['password']        = md5("password");
-                $ins_data['office_phone']        = $this->input->post('office_phone');
-                $ins_data['cell_phone']        = $this->input->post('mobile_phone');
-                $ins_data['address1']      = $this->input->post('address1');
-                $ins_data['city']      = $this->input->post('city');
-                $ins_data['state']      = $this->input->post('state');
-                $ins_data['zip']      = $this->input->post('zipcode');
+                $ins_data['first_name']   = $this->input->post('first_name');
+                $ins_data['last_name']    = $this->input->post('last_name');
+                $ins_data['email1']       = $this->input->post('email1');
+                $ins_data['email2']       = $this->input->post('email2');
+                $ins_data['username']     = $this->input->post('username');
+
+                if($pwd){
+                  $ins_data['password']   = md5($pwd);
+                  $ins_data['org_pwd']    = $pwd;
+                }
+
+                $ins_data['office_phone'] = $this->input->post('office_phone');
+                $ins_data['cell_phone']   = $this->input->post('mobile_phone');
+                $ins_data['address1']     = $this->input->post('address1');
+                $ins_data['address2']     = $this->input->post('address2');
+                $ins_data['city']         = $this->input->post('city');
+                $ins_data['state']        = $this->input->post('state');
+                $ins_data['zip']          = $this->input->post('zipcode');
                 $ins_data['active']       = $this->input->post('enabled');
-                $ins_data['created_id']       = get_user_data()['id'];
+
                 if($edit_id)
                 {
-                  $ins_data['updated_id']       = get_user_data()['id'];
+                  $ins_data['updated_id']   = get_user_data()['id'];
                   $ins_data['updated_date'] = date('Y-m-d H:i:s'); 
                   $this->contractor_model->update(array("id" => $edit_id),$ins_data);
                   $msg = 'Contractor updated successfully';
                 }
                 else
                 {    
+                  $ins_data['created_id']   = get_user_data()['id'];
                   $ins_data['created_date'] = date('Y-m-d H:i:s'); 
                   $this->contractor_model->insert($ins_data);
                   $msg = 'Contractor added successfully';
                 }
+
                 $this->session->set_flashdata('success_msg',$msg,TRUE);
                 redirect('contractors');
             }    
             else
             {            
-                $edit_data = array('id'=>'','first_name'=>'','company_name'=>'','last_name'=>'','email1'=>'','email2'=>'',
+                $edit_data = array('id'=>'','username'=>'','first_name'=>'','company_name'=>'','last_name'=>'','email1'=>'','email2'=>'',
                     'office_phone'=>'','cell_phone'=>'','city'=>'','state'=>'','zip'=>'','address1'=>'','address2'=>'');
                 $edit_data['active']        = 'Y';                    
 
