@@ -122,8 +122,12 @@ function displayData($data = null, $type = 'string', $row = array(), $wrap_tag_o
             $data = humanize($data);
             break;
         case 'date':
-                str2USDate($data);
+            str2USDate($data);
             break;
+        case 'status':
+           $labels_array = array('COMPLETED' => 'label-success','PROCESSING' => 'label-success','CANCELLED' => 'label-danger','HOLD' => 'label-danger','PENDING'=>'label-warning');
+           $data = "<span class='label {$labels_array[$data]}'>{$data}</span>";
+          break;
         case 'datetime':
             $data = str2USDate($data);
             break;

@@ -56,14 +56,14 @@
                                     <div class="form-group <?php echo (form_error('p_e_d'))?'has-error':'';?>">
                                        <label class="control-label col-md-3">Project End Date<span class="required">*</span></label>
                                        <div class="col-md-9">
-                                          <input type="text" class="form-control form-control-inline date date-picker" name="p_e_d" id="p_e_d" value="<?php echo set_value('p_e_d',$editdata['p_e_d']);?>"> 
+                                          <input type="text" class="form-control form-control-inline date date-picker" name="p_e_d" id="p_e_d" value="<?php echo set_value('p_e_d',$editdata['p_e_d']);?>">
                                           <?php echo form_error('p_e_d'); ?>
                                        </div>
                                     </div>
                                  </div>
                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                       <label class="control-label col-md-3">Project Blue Print</label>
+                                    <div class="form-group <?php echo (form_error('p_b_f'))?'has-error':'';?>">
+                                       <label class="control-label col-md-3">Project Blue Print <span class="required">*</span></label>
                                        <div class="col-md-9">
                                           <input type="file" class="form-control" name="p_b_f" id="p_b_f">
                                           <?php echo form_error('p_b_f'); ?> 
@@ -75,7 +75,7 @@
                               </div>
 
                               <h3 class="form-section"><strong>Primary Contact Address</strong></h3>
-                              
+                              <input type="hidden" name="client_id1" value="<?=$editdata['client_id1'];?>">
                               <div class="row">
                                  <div class="col-md-6">
                                     <div class="form-group <?php echo (form_error('first_name'))?'has-error':'';?>">
@@ -195,6 +195,7 @@
                               <!--/row-->
                               
                               <h3 class="form-section"><strong>Secondary Contact Address</strong></h3>
+                              <input type="hidden" name="client_id2" value="<?=$editdata['client_id2'];?>">
                               <!--/row-->
                               <div class="row">
                                  <div class="col-md-6">
@@ -308,7 +309,7 @@
 
                               <!--/row-->
                               <h3 class="form-section"><strong>Assign Contractor</strong></h3>
-
+                              <input type="hidden" name="con_id" value="<?=isset($editdata['a_c'])?$editdata['a_c']:'';?>">
                               <div>
                                  <div>
                                     <div class="mt-repeater-input mt-checkbox-inline <?php echo (form_error('a_c[]'))?'has-error':'';?>">
@@ -316,7 +317,7 @@
                                          <br>
 
                                          <?php 
-                                            
+                                            $editdata['a_c'] = isset($editdata['a_c'])?explode(",",$editdata['a_c']):'';
                                             $is_cnt_list = (isset($editdata['a_c']) && is_array($editdata['a_c']))?$editdata['a_c']:array();
                                             
                                             if(is_array($contractor_info) && count($contractor_info)): 
@@ -407,39 +408,30 @@
 
                               if(isset($editdata['r_name']))
                               {
-                                 
-
-                                 $r_name = (isset($editdata['r_name']) && is_array($editdata['r_name']))?isset($editdata['r_name']):'';
-
-                                 $r_no = (isset($editdata['r_no']) && is_array($editdata['r_no']))?$editdata['r_no'][0]:'';
-
-                                 $r_desc2 = (isset($editdata['r_desc_dtl']) && is_array($editdata['r_desc_dtl']))?$editdata['r_desc_dtl'][0]:'';
-
-
-
-                              }
-
-                              
-                                
+                                $r_id = (isset($editdata['r_id']) && is_array($editdata['r_id']))?$editdata['r_id'][0]:'';
+                                $r_name = (isset($editdata['r_name']) && is_array($editdata['r_name']))?$editdata['r_name'][0]:'';
+                                $r_no = (isset($editdata['r_no']) && is_array($editdata['r_no']))?$editdata['r_no'][0]:'';
+                              $r_desc2 = (isset($editdata['r_desc_dtl']) && is_array($editdata['r_desc_dtl']))?$editdata['r_desc_dtl'][0]:'';
+                              }                                
                            ?>
 
                            <div style="margin-left:20px;">
-
+                              <input type="hidden"  name="r_id[]" value="<?php echo $r_id; ?>"/>
                               <div data-repeater-item class="mt-repeater-item mt-repeater-cust-item">
                                  <!-- jQuery Repeater Container -->
-                                 <div class="mt-repeater-input <?php echo (form_error('r_name[]'))?'has-error':'';  ?>">
+                                 <div class="mt-repeater-input <?php echo (form_error('r_name[0]'))?'has-error':'';  ?>">
                                     <label class="control-label">Room Name</label>
                                     <br/>
-                                    <input class="input-group form-control" size="16" type="text"  name="r_name[]" value="<?php echo $r_name; ?>"/> 
-                                   <?php echo (form_error('r_name[]'))?form_error('r_name[]'):'';  ?>
+                                    <input class="input-group form-control" size="16" type="text"  name="r_name[]" value="<?php echo $r_name; ?>"/>
+                                   <?php echo (form_error('r_name[0]'))?form_error('r_name[0]'):'';  ?>
                                  </div>
-                                 <div class="mt-repeater-input <?php echo (form_error('r_no[]'))?'has-error':'';  ?>">
+                                 <div class="mt-repeater-input <?php echo (form_error('r_no[0]'))?'has-error':'';  ?>">
                                     <label class="control-label">Room Number</label>
                                     <br/>
                                     
                                     <input class="input-group form-control" size="16" type="text"  name="r_no[]" value="<?php echo $r_no; ?>"/>
 
-                                    <?php echo (form_error('r_no[]'))?form_error('r_no[]'):'';  ?>
+                                    <?php echo (form_error('r_no[0]'))?form_error('r_no[0]'):'';  ?>
 
                                  </div>
                                  <div class="mt-repeater-input">
@@ -462,22 +454,23 @@
                                       
                                       foreach($editdata['r_name'] as $key=>$value):
                                  ?>
-
+                               <input type="hidden"  name="r_id[]" value="<?=isset($editdata['r_id'][$k])?$editdata['r_id'][$k]:''; ?>"/>
                                 <div data-repeater-item class="mt-repeater-item mt-repeater-cust-item">
                                  <!-- jQuery Repeater Container -->
-                                 <div class="mt-repeater-input">
+                                 <div class="mt-repeater-input <?php echo (form_error('r_name['.$k.']'))?'has-error':'';  ?>">
                                     <label class="control-label">Room Name</label>
                                     <br/>
                                     <input class="input-group form-control" size="16" type="text"  name="r_name[]" value="<?php echo $value; ?>"/> 
+                                    <?php echo (form_error('r_name['.$k.']'))?form_error('r_name['.$k.']'):'';  ?>
                                  </div>
 
-                                 <div class="mt-repeater-input">
+                                 <div class="mt-repeater-input <?php echo (form_error('r_no['.$k.']'))?'has-error':'';  ?>">
                                     <label class="control-label">Room Number</label>
                                     <br/>
                                     
                                     <input class="input-group form-control" size="16" type="text"  name="r_no[]" value="<?php echo $editdata['r_no'][$k]; ?>"/>
 
-
+                                    <?php echo (form_error('r_no['.$k.']'))?form_error('r_no['.$k.']'):'';  ?>
                                  </div>
                                  
                                  <div class="mt-repeater-input">
@@ -507,7 +500,7 @@
                                 if(isset($editdata['group-a']))
                                 {
                                    $m_arr = $editdata['group-a'];
-
+                                   $m_id = isset($m_arr[0]['m_id'])?$m_arr[0]["m_id"]:'';
                                    $m_name = isset($m_arr[0]['m_name'])?$m_arr[0]["m_name"]:'';
 
                                    $m_desc = isset($m_arr[0]['m_desc'])?$m_arr[0]["m_desc"]:'';
@@ -519,7 +512,7 @@
                                 else
                                 {
                                  $m_arr = array();
-                                 $m_name=$m_desc=$m_s_d=$m_e_d='';
+                                 $m_name=$m_desc=$m_s_d=$m_e_d='';$m_id='';
                                 } 
                                 
                               ?>
@@ -528,8 +521,8 @@
 
                                  <div data-repeater-item class="mt-repeater-item">
                                     <!-- jQuery Repeater Container -->
-                                   
-                                    <div class="mt-repeater-input mt-repeater-textarea <?php echo (form_error('group-a[0][m_name]') && $m_name=='')?'has-error':'';?>">
+                                   <input type="hidden" name="m_id" id="m_id" class="form-control" value="<?php echo set_value('m_id',$m_id);?>">
+                                    <div class="mt-repeater-input mt-repeater-input <?php echo (form_error('group-a[0][m_name]') && $m_name=='')?'has-error':'';?>">
                                        <label class="control-label">Milestone Name</label>
                                        <br/>
                                        <input type="text" name="m_name" id="m_name" class="form-control" value="<?php echo set_value('m_name',$m_name);?>">
@@ -563,19 +556,13 @@
                                             $selected='';
 
                                             foreach($work_items as $key2=>$value2):
-                                             
                                              if(isset($editdata['group-a']))
                                              {
-                                                $work_item = $m_arr[0]['m_work_items'];
-
-                                                $work_item= implode(',',$work_item);
-
+                                                $work_item = $editdata['group-a'][0]['m_work_items'];
+                                                // $work_item= implode(',',$work_item);
                                                 $final_work_item= explode(',',$work_item);
-
-                                                $m_cnt = $m_arr[0]['m_cnt'];
-                                                
+                                                $m_cnt = $m_arr[0]['m_cnt'];                                                
                                                 $selected = (in_array($value2['id'],$final_work_item))?"selected='selected'":"";  
-
                                              }
                                         ?>
                                           <option value="<?php echo $value2['id']; ?>" <?php echo $selected; ?>><?php echo $value2['work_name']; ?></option>
@@ -592,17 +579,17 @@
                                        <label class="control-label">Contractor</label>
                                        <br/>
                                        <select name="m_cnt" id="m_cnt" class="form-control">
-                                          <?php if(isset($editdata['a_c']) && count($editdata['a_c']) && is_array($editdata['a_c'])):
+                                          <?php if(isset($contractor_info) && count($contractor_info) && is_array($contractor_info)):
                                               $a_c_name = isset($editdata['a_c_name'])?$editdata['a_c_name']:'';
 
-                                              foreach($editdata['a_c'] as $key6=>$value6):
+                                              foreach($contractor_info as $key6=>$value6):
 
                                                 $final_m_cnt= explode(',',$m_cnt);
 
                                                 $selected = (in_array($value6,$final_m_cnt))?"selected='selected'":"";  
 
                                           ?>
-                                           <option value="<?php echo $value6; ?>" <?php echo $selected; ?>><?php echo $a_c_name[$key6]; ?></option>
+                                           <option value="<?php echo $value6['id']; ?>" <?php echo $selected; ?>><?php echo $value6['company_name']; ?></option>
                                           <?php  endforeach;endif;
                                           ?>
                                        </select>
@@ -623,8 +610,8 @@
 
                                  <div data-repeater-item class="mt-repeater-item">
                                     <!-- jQuery Repeater Container -->
-                                   
-                                    <div class="mt-repeater-input mt-repeater-textarea <?php echo (form_error('group-a['.$i.'][m_name]') && $value['m_name']=='')?'has-error':'';?>">
+                                   <input type="hidden" name="m_id" id="m_id" class="form-control" value="<?php echo set_value('m_id',$value['m_id']);?>">
+                                    <div class="mt-repeater-input mt-repeater-input <?php echo (form_error('group-a['.$i.'][m_name]') && $value['m_name']=='')?'has-error':'';?>">
                                        <label class="control-label">Milestone Name</label>
                                        <br/>
                                        <input type="text" name="m_name" id="m_name" class="form-control" value="<?php echo set_value('m_name',$value["m_name"]);?>">
@@ -659,7 +646,7 @@
 
                                              foreach($work_items as $key2=>$value2):
                                              
-                                             $work_item2= implode(',',$value['m_work_items']);
+                                             $work_item2= $value['m_work_items'];
                                              
                                              $final_work_item2= explode(',',$work_item2);
                                              
@@ -680,9 +667,9 @@
                                        <label class="control-label">Contractor</label>
                                        <br/>
                                        <select name="m_cnt" id="m_cnt" class="form-control">
-                                          <?php if(isset($editdata['a_c']) && count($editdata['a_c']) && is_array($editdata['a_c'])):
+                                          <?php if(isset($contractor_info) && count($contractor_info) && is_array($contractor_info)):
                                               $a_c_name2 = isset($editdata['a_c_name'])?$editdata['a_c_name']:'';
-                                              foreach($editdata['a_c'] as $key7=>$value7):
+                                              foreach($contractor_info as $key7=>$value7):
 
                                                 $m_cnt2 = $value['m_cnt'];
 
@@ -691,7 +678,7 @@
                                                 $selected = (in_array($value7,$final_m_cnt2))?"selected='selected'":"";  
 
                                           ?>
-                                           <option value="<?php echo $value7; ?>" <?php echo $selected; ?>><?php echo $a_c_name2[$key7]; ?></option>
+                                           <option value="<?php echo $value7['id']; ?>" <?php echo $selected; ?>><?php echo $value7['company_name']; ?></option>
                                           <?php  endforeach;endif;
                                           ?>
                                        </select>

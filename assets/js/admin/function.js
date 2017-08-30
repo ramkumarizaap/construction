@@ -18,9 +18,10 @@ $(function()
 
     $(".mt-repeater-add2").click(function()
     {
-
+        if($(".mt-repeater-cust-item").length >= 1)
+            $(".room-del").removeClass("hide");
         var mt_repeater_div = $('.mt-repeater-cust-item').first().clone();
-
+        mt_repeater_div.find("input,textarea").val("");
         $(".mt-repeater-room-dtl").append(mt_repeater_div);
 
     });

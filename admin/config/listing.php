@@ -47,11 +47,11 @@ $config['project_index'] = array(
 	"base_url"	=> 	'/project/index/',
 	"per_page"	=>	"20",
 	"fields"	=> array(   
-						'id'=>array('name'=>'Ticket id#', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),					
-						'company_name'=>array('name'=>'Company Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),					
-						'support_type'=>array('name'=>'Type', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
-						'description'=>array('name'=>'Description', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
-						'status'=>array('name'=>'Status', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'id'=>array('name'=>'Porject ID#', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),					
+						'project_name'=>array('name'=>'Project Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),					
+						'start_date'=>array('name'=>'Start Date', 'data_type' => 'date', 'sortable' => FALSE, 'default_view'=>1),
+						'complete_date'=>array('name'=>'Completion Date', 'data_type' => 'date', 'sortable' => FALSE, 'default_view'=>1),
+						'status'=>array('name'=>'Status', 'data_type' => 'status', 'sortable' => FALSE, 'default_view'=>1),
 						'created_date'=>array('name'=>'Submited Date', 'data_type' => 'datetime', 'sortable' => FALSE, 'default_view'=>1)),
 
 	"default_order"	=> "id",

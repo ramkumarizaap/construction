@@ -962,6 +962,8 @@ $.fn.repeater = function (fig) {
         }());
 
         var addItem = function () {
+            if($(".milestone-div").length>=1)
+                $(".mile-del").removeClass("hide");
             var $item = $itemTemplate.clone();
             appendItem($item);
             if(fig.repeaters) {
@@ -985,7 +987,9 @@ $.fn.repeater = function (fig) {
         });
 
         $list.on('click', '[data-repeater-delete]', function () {
-            var self = $(this).closest('[data-repeater-item]').get(0);
+            var self = $(this).closest('[data-repeater-item]');
+            if($(".milestone-div").length<=2)
+                $(".mile-del").addClass("hide");
             hide.call(self, function () {
                 $(self).remove();
                 setIndexes($items(), getGroupName(), fig.repeaters);
@@ -993,7 +997,9 @@ $.fn.repeater = function (fig) {
         });
 
         $(document).on('click','[data-repeater-delete2]',function () {
-            var self = $(this).closest('[data-repeater-item]').get(0);
+            var self = $(this).closest('[data-repeater-item]');
+            if($(".mt-repeater-cust-item").length<=2)
+                $(".room-del").addClass("hide");
             hide.call(self, function () {
                 $(self).remove();
                 setIndexes($items(), getGroupName(), fig.repeaters);
