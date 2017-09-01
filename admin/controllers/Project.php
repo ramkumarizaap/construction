@@ -25,7 +25,7 @@ class Project extends Admin_Controller
                  array('field' => 'p_city','label' =>'Project City','rules' => 'trim|required'),
                  array('field' => 'p_state','label' =>'Project State','rules' => 'trim|required'),
                  array('field' => 'p_zip_code','label' =>'Project Zip Code','rules' => 'trim|required'),
-                 array('field' => 'p_b_f','label' =>'Project Blue Print','rules' => 'trim|required'),
+                 // array('field' => 'p_b_f','label' =>'Project Blue Print','rules' => 'trim|required'),
             );
 
 
@@ -42,47 +42,30 @@ class Project extends Admin_Controller
     public function index()
     {
     	$this->layout->add_javascripts(array('listing'));
-
-      $this->load->library('listing');
-      
-      $this->simple_search_fields = array('id'=>'Project ID#','project_name' => 'Project Name','start_date'=>'Start Date','complete_date'=>'Completed Date','status'=>'Status');
-      
-      $this->_narrow_search_conditions = array("start_date");
-      
-      $str = '<a href="'.site_url('project/add/{id}').'" class="btn btn btn-padding yellow table-action"><i class="fa fa-edit edit"></i></a><a href="javascript:void(0);" data-original-title="Remove" data-toggle="tooltip" data-placement="top" class="table-action btn-padding btn red" onclick="delete_record(\'project/delete/{id}\',this);"><i class="fa fa-trash-o trash"></i></a>';        
-      
-      $this->listing->initialize(array('listing_action' => $str));
-      
-      $listing = $this->listing->get_listings('projects_model', 'listing');
-      
-      $this->data['btn'] = "<a href=".site_url('project/add')." class='btn green'>Add New Project <i class='fa fa-plus'></i></a>";
-      
+      $this->load->library('listing');      
+      $this->simple_search_fields = array('id'=>'Project ID#','project_name' => 'Project Name','start_date'=>'Start Date','complete_date'=>'Completed Date','status'=>'Status');      
+      $this->_narrow_search_conditions = array("start_date");      
+      $str = '<a href="'.site_url('project/add/{id}').'" class="btn btn btn-padding yellow table-action"><i class="fa fa-edit edit"></i></a><a href="javascript:void(0);" data-original-title="Remove" data-toggle="tooltip" data-placement="top" class="table-action btn-padding btn red" onclick="delete_record(\'project/delete/{id}\',this);"><i class="fa fa-trash-o trash"></i></a>';      
+      $this->listing->initialize(array('listing_action' => $str));      
+      $listing = $this->listing->get_listings('projects_model', 'listing');      
+      $this->data['btn'] = "<a href=".site_url('project/add')." class='btn green'>Add New Project <i class='fa fa-plus'></i></a>"; 
       if($this->input->is_ajax_request())
-        $this->_ajax_output(array('listing' => $listing), TRUE);
-      
-      $this->data['bulk_actions'] = array('' => 'select', 'delete' => 'Delete');
-      
-      $this->data['simple_search_fields'] = $this->simple_search_fields;
-      
-      $this->data['search_conditions'] = $this->session->userdata($this->namespace.'_search_conditions');
-      
-      $this->data['per_page'] = $this->listing->_get_per_page();
-      
-      $this->data['per_page_options'] = array_combine($this->listing->_get_per_page_options(), $this->listing->_get_per_page_options());
-      
-      $this->data['search_bar'] = $this->load->view('listing/search_bar', $this->data, TRUE);
-      
-      $this->data['listing'] = $listing;
-      
+        $this->_ajax_output(array('listing' => $listing), TRUE);      
+      $this->data['bulk_actions'] = array('' => 'select', 'delete' => 'Delete');      
+      $this->data['simple_search_fields'] = $this->simple_search_fields;      
+      $this->data['search_conditions'] = $this->session->userdata($this->namespace.'_search_conditions');      
+      $this->data['per_page'] = $this->listing->_get_per_page();      
+      $this->data['per_page_options'] = array_combine($this->listing->_get_per_page_options(), $this->listing->_get_per_page_options());      
+      $this->data['search_bar'] = $this->load->view('listing/search_bar', $this->data, TRUE);      
+      $this->data['listing'] = $listing;      
       $this->data['grid'] = $this->load->view('listing/view', $this->data, TRUE);
       $this->layout->view('/frontend/project/index');
     }
-
-
     public function add($edit_id ='')
     {
       // echo "<pre>";
-      // print_r($_POST);
+      // print_r($_FILES);
+      // print_r($this->do_upload());
       // exit;
       $user_sess_data = $this->session->userdata("user_data");
       $form = $this->input->post();
@@ -165,8 +148,12 @@ class Project extends Admin_Controller
         $project_dtl['project_address2'] = $form['p_addr2'];        
         $project_dtl['project_city'] = $form['p_city'];        
         $project_dtl['project_state'] = $form['p_state'];        
-        $project_dtl['project_zip_code'] = $form['p_zip_code'];        
-        $project_dtl['created_id'] = $client_info_id;        
+        $project_dtl['project_zip_code'] = $form['p_zip_code'];
+        if(isset($_FILES['p_b_f']) && $_FILES['p_b_f']['size'] > 0)
+          $project_dtl['blueprint'] = "assets/uploads/blueprints/".$this->do_upload()['upload_data']['file_name'];
+        else
+          $project_dtl['blueprint'] = $form['blue_print'];
+        $project_dtl['created_id'] = $client_info_id;
         $project_dtl['created_date'] = date("Y-m-d H:i:s");
         if($edit_id)
         {
@@ -259,6 +246,27 @@ class Project extends Admin_Controller
       $this->layout->view('/frontend/project/add');
     }
 
+    public function do_upload()
+    {
+      $config['upload_path']          = '../assets/uploads/blueprints/';
+      $config['allowed_types']        = 'gif|jpg|png';
+      $config['max_size']             = 10000;
+      $config['max_width']            = 2024;
+      $config['max_height']           = 1768;
+      $this->load->library('upload', $config);
+      if ( ! $this->upload->do_upload('p_b_f'))
+      {
+        $error = array('error' => $this->upload->display_errors());
+        // $this->load->view('upload_form', $error);
+        return $error;
+      }
+      else
+      {
+        $data = array('upload_data' => $this->upload->data());
+        // $this->load->view('upload_success', $data);
+        return $data;
+      }
+    }
 
     function send_mail($milestone_dtl,$form)
     {

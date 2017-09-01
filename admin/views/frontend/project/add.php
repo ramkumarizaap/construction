@@ -25,7 +25,7 @@
                   </div>
                    <div class="portlet-body form">
                         <!-- BEGIN FORM-->
-                        <form action="#" class="mt-repeater form-horizontal" name="add_project" id="add_new_project" method="post">
+                        <form action="#" class="mt-repeater form-horizontal" name="add_project" id="add_new_project" method="post" enctype="multipart/form-data">
                            <div class="form-body">
 
                                <!--/row-->
@@ -63,10 +63,15 @@
                                  </div>
                                  <div class="col-md-6">
                                     <div class="form-group <?php echo (form_error('p_b_f'))?'has-error':'';?>">
-                                       <label class="control-label col-md-3">Project Blue Print <span class="required">*</span></label>
+                                       <label class="control-label col-md-3">Project Blue Print</label>
                                        <div class="col-md-9">
                                           <input type="file" class="form-control" name="p_b_f" id="p_b_f">
                                           <?php echo form_error('p_b_f'); ?> 
+                                       </div>
+                                       <br><br>
+                                       <div class="col-md-9">
+                                        <img src="<?=base_url()."../".$editdata['p_b_f'];?>" style="height: 100px;width: 150px;">
+                                        <input type="hidden" name="blue_print" value="<?=$editdata['p_b_f'];?>">
                                        </div>
                                     </div>
                                  </div>
@@ -246,7 +251,7 @@
                                     <div class="form-group">
                                        <label class="control-label col-md-3">Address</label>
                                        <div class="col-md-9">
-                                          <textarea class="form-control" name="se_addr" id="se_addr" placeholder="Address"></textarea>
+                                          <textarea class="form-control" name="se_addr" id="se_addr" placeholder="Address"><?php echo set_value('se_addr',$editdata['se_addr']);?></textarea>
                                        </div>
                                     </div>
                                  </div>
