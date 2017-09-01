@@ -241,7 +241,7 @@ class Project extends Admin_Controller
       {  
         $this->data['title']     = "ADD PROJECTS";        
         $this->data['crumb']   = "Add";        
-        $this->data['editdata'] = array("p_name" => "","p_s_d"=>"","p_e_d"=>"","first_name"=>"","last_name"=>"","email"=>"","phone"=>"","addr"=>"","city"=>"","state" => "","country"=>"","zip_code"=>"","se_first_name"=>"","se_last_name"=>"","se_email"=>"","se_phone"=>"","se_addr"=>"","se_city"=>"","se_state"=>"","se_country"=>"","se_zip_code"=>"","a_c"=>"","p_addr1"=>"","p_addr2"=>"","p_city"=>"","p_state"=>"","p_zip_code"=>"","r_name"=>"","r_no"=>"","r_desc_dtl"=>"","m_name"=>"","m_cnt"=>"","m_s_d"=>"","m_e_d"=>"","m_desc"=>"","m_id"=>"","client_id1"=>"","client_id2"=>"","r_id"=>"");  
+        $this->data['editdata'] = array("p_name" => "","p_s_d"=>"","p_e_d"=>"","first_name"=>"","last_name"=>"","email"=>"","phone"=>"","addr"=>"","city"=>"","state" => "","country"=>"","zip_code"=>"","se_first_name"=>"","se_last_name"=>"","se_email"=>"","se_phone"=>"","se_addr"=>"","se_city"=>"","se_state"=>"","se_country"=>"","se_zip_code"=>"","a_c"=>"","p_addr1"=>"","p_addr2"=>"","p_city"=>"","p_state"=>"","p_zip_code"=>"","r_name"=>"","r_no"=>"","r_desc_dtl"=>"","m_name"=>"","m_cnt"=>"","m_s_d"=>"","m_e_d"=>"","m_desc"=>"","m_id"=>"","client_id1"=>"","client_id2"=>"","r_id"=>"","p_b_f"=>"");  
       }
       $this->layout->view('/frontend/project/add');
     }

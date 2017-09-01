@@ -68,11 +68,14 @@
                                           <input type="file" class="form-control" name="p_b_f" id="p_b_f">
                                           <?php echo form_error('p_b_f'); ?> 
                                        </div>
+                                       <?php 
+                                       if($editdata['p_b_f']!=''){?>
                                        <br><br>
                                        <div class="col-md-9">
                                         <img src="<?=base_url()."../".$editdata['p_b_f'];?>" style="height: 100px;width: 150px;">
                                         <input type="hidden" name="blue_print" value="<?=$editdata['p_b_f'];?>">
                                        </div>
+                                       <?php }?>
                                     </div>
                                  </div>
                                  <!--/span-->
