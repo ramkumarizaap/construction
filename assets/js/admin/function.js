@@ -18,7 +18,6 @@ $(function()
 
     $(".mt-repeater-add2").click(function()
     {
-        alert();
         if($(".mt-repeater-cust-item").length >= 1)
             $(".room-del").removeClass("hide");
         var mt_repeater_div = $('.mt-repeater-cust-item').first().clone();

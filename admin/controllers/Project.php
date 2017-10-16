@@ -67,6 +67,7 @@ class Project extends Admin_Controller
       // print_r($_FILES);
       // print_r($this->do_upload());
       // exit;
+      $this->data['editdata'] = array("p_name" => "","p_s_d"=>"","p_e_d"=>"","first_name"=>"","last_name"=>"","email"=>"","phone"=>"","addr"=>"","city"=>"","state" => "","country"=>"","zip_code"=>"","se_first_name"=>"","se_last_name"=>"","se_email"=>"","se_phone"=>"","se_addr"=>"","se_city"=>"","se_state"=>"","se_country"=>"","se_zip_code"=>"","a_c"=>"","p_addr1"=>"","p_addr2"=>"","p_city"=>"","p_state"=>"","p_zip_code"=>"","r_name"=>"","r_no"=>"","r_desc_dtl"=>"","m_name"=>"","m_cnt"=>"","m_s_d"=>"","m_e_d"=>"","m_desc"=>"","m_id"=>"","client_id1"=>"","client_id2"=>"","r_id"=>"","p_b_f"=>"");
       $user_sess_data = $this->session->userdata("user_data");
       $form = $this->input->post();
       $this->layout->add_stylesheets(array('components.min','bootstrap-datepicker3.min'));      
@@ -167,8 +168,8 @@ class Project extends Admin_Controller
         $project_cnt_dtl['contractor_id'] = implode(",",$form['a_c']);
         if($edit_id)
         {
-          $up5 = $this->projects_model->update(array("id"=>$form['con_id']),$project_cnt_dtl,"project_contractors");
-          $project_cnt_id = $form['con_id'];
+          $up5 = $this->projects_model->update(array("project_id"=>$project_id),$project_cnt_dtl,"project_contractors");
+          // $project_cnt_id = $form['project_id'];
         }
         else
           $project_cnt_id = $this->projects_model->insert($project_cnt_dtl,"project_contractors");
@@ -231,8 +232,10 @@ class Project extends Admin_Controller
       }
 
       else if($this->input->post()) 
-      { 
-        $this->data['editdata'] = $_POST;        
+      {
+        // print_r($_POST);exit;  
+        $this->data['editdata'] = $_POST;
+        $this->data['editdata']['p_b_f'] = $_FILES['p_b_f']['name'];
         $this->data['title']     = "ADD PROJECTS";        
         $this->data['crumb']   = "Add";        
         $this->data['editdata']['id'] = $edit_id != ''?$edit_id:'';
@@ -241,7 +244,6 @@ class Project extends Admin_Controller
       {  
         $this->data['title']     = "ADD PROJECTS";        
         $this->data['crumb']   = "Add";        
-        $this->data['editdata'] = array("p_name" => "","p_s_d"=>"","p_e_d"=>"","first_name"=>"","last_name"=>"","email"=>"","phone"=>"","addr"=>"","city"=>"","state" => "","country"=>"","zip_code"=>"","se_first_name"=>"","se_last_name"=>"","se_email"=>"","se_phone"=>"","se_addr"=>"","se_city"=>"","se_state"=>"","se_country"=>"","se_zip_code"=>"","a_c"=>"","p_addr1"=>"","p_addr2"=>"","p_city"=>"","p_state"=>"","p_zip_code"=>"","r_name"=>"","r_no"=>"","r_desc_dtl"=>"","m_name"=>"","m_cnt"=>"","m_s_d"=>"","m_e_d"=>"","m_desc"=>"","m_id"=>"","client_id1"=>"","client_id2"=>"","r_id"=>"","p_b_f"=>"");  
       }
       $this->layout->view('/frontend/project/add');
     }
@@ -249,7 +251,7 @@ class Project extends Admin_Controller
     public function do_upload()
     {
       $config['upload_path']          = '../assets/uploads/blueprints/';
-      $config['allowed_types']        = 'gif|jpg|png';
+      $config['allowed_types']        = 'gif|jpg|png|jpeg';
       $config['max_size']             = 10000;
       $config['max_width']            = 2024;
       $config['max_height']           = 1768;
@@ -405,6 +407,12 @@ class Project extends Admin_Controller
         $output['status']  = "error";
       }      
       $this->_ajax_output($output, TRUE);            
+    }
+    public function delete_dynamic()
+    {
+      $id = $this->input->post('id');
+      $table = $this->input->post('table');
+      $this->projects_model->delete(array("id"=>$id),$table);
     }
 }
 ?>

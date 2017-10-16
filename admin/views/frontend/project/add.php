@@ -317,7 +317,7 @@
 
                               <!--/row-->
                               <h3 class="form-section"><strong>Assign Contractor</strong></h3>
-                              <input type="hidden" name="con_id" value="<?=isset($editdata['a_c'])?$editdata['a_c']:'';?>">
+                              <!-- <input type="text" name="con_id" value="<?=isset($editdata['a_c'])?$editdata['a_c']:'';?>"> -->
                               <div>
                                  <div>
                                     <div class="mt-repeater-input mt-checkbox-inline <?php echo (form_error('a_c[]'))?'has-error':'';?>">
@@ -325,6 +325,9 @@
                                          <br>
 
                                          <?php 
+                                          if(isset($editdata['a_c']) && is_array($editdata['a_c']))
+                                            $editdata['a_c'] = isset($editdata['a_c'])?$editdata['a_c']:'';
+                                          else
                                             $editdata['a_c'] = isset($editdata['a_c'])?explode(",",$editdata['a_c']):'';
                                             $is_cnt_list = (isset($editdata['a_c']) && is_array($editdata['a_c']))?$editdata['a_c']:array();
                                             
@@ -419,8 +422,12 @@
                                 $r_id = (isset($editdata['r_id']) && is_array($editdata['r_id']))?$editdata['r_id'][0]:'';
                                 $r_name = (isset($editdata['r_name']) && is_array($editdata['r_name']))?$editdata['r_name'][0]:'';
                                 $r_no = (isset($editdata['r_no']) && is_array($editdata['r_no']))?$editdata['r_no'][0]:'';
-                              $r_desc2 = (isset($editdata['r_desc_dtl']) && is_array($editdata['r_desc_dtl']))?$editdata['r_desc_dtl'][0]:'';
-                              }                                
+                                $r_desc2 = (isset($editdata['r_desc_dtl']) && is_array($editdata['r_desc_dtl']))?$editdata['r_desc_dtl'][0]:'';
+                              }
+                              else
+                              {
+                                $r_id = "";$r_name = "";$r_no = "";$r_desc2 = "";
+                              }          
                            ?>
 
                            <div style="margin-left:20px;">
@@ -449,7 +456,7 @@
                                  </div>
                                 
                                  <div class="mt-repeater-input">
-                                    <a href="javascript:;" data-repeater-delete2 class="btn btn-danger mt-repeater-delete">
+                                    <a href="javascript:;" data-id="<?=$r_id;?>" data-table="rooms" data-repeater-delete2 class="btn btn-danger mt-repeater-delete">
                                     <i class="fa fa-close"></i> Delete</a>
                                  </div>
                               </div>
@@ -487,12 +494,12 @@
                                  <textarea class="form-control" name="r_desc_dtl[]" id="r_desc_dtl"/><?php echo $editdata['r_desc_dtl'][$k]; ?></textarea> 
                                  </div>
                                  <div class="mt-repeater-input">
-                                    <a href="javascript:;" data-repeater-delete2 class="btn btn-danger mt-repeater-delete">
+                                    <a href="javascript:;" data-id="<?=isset($editdata['r_id'][$k])?$editdata['r_id'][$k]:''; ?>" data-repeater-delete2 data-table="rooms" class="btn btn-danger mt-repeater-delete">
                                     <i class="fa fa-close"></i> Delete</a>
                                  </div>
 
                                 </div>  
-                              <?php endforeach;endif; ?>
+                              <?php $k++;endforeach;endif; ?>
                                
                               </div>
                            </div>
@@ -604,7 +611,7 @@
                                         <?php echo (form_error('group-a[0][m_cnt]') && $m_cnt=='')?form_error('group-a[0][m_cnt]'):'';?>
                                     </div>
                                     <div class="mt-repeater-input">
-                                       <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete">
+                                       <a href="javascript:;" data-id="<?=$m_id;?>" data-table="project_milestones" data-repeater-delete class="btn btn-danger mt-repeater-delete">
                                        <i class="fa fa-close"></i> Delete</a>
                                     </div>
                                  </div>
@@ -683,7 +690,7 @@
 
                                                 $final_m_cnt2= explode(',',$m_cnt2);
                                                 
-                                                $selected = (in_array($value7,$final_m_cnt2))?"selected='selected'":"";  
+                                                $selected = (in_array($value7['id'],$final_m_cnt2))?"selected='selected'":"";  
 
                                           ?>
                                            <option value="<?php echo $value7['id']; ?>" <?php echo $selected; ?>><?php echo $value7['company_name']; ?></option>
@@ -695,7 +702,7 @@
                                    
                                     
                                     <div class="mt-repeater-input">
-                                       <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete">
+                                       <a href="javascript:;" data-id="<?=$value["m_id"];?>" data-table="project_milestones" data-repeater-delete class="btn btn-danger mt-repeater-delete">
                                        <i class="fa fa-close"></i> Delete</a>
                                     </div>
                                  </div>
