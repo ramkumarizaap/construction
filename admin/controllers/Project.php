@@ -63,10 +63,6 @@ class Project extends Admin_Controller
     }
     public function add($edit_id ='')
     {
-      // echo "<pre>";
-      // print_r($_FILES);
-      // print_r($this->do_upload());
-      // exit;
       $this->data['editdata'] = array("p_name" => "","p_s_d"=>"","p_e_d"=>"","first_name"=>"","last_name"=>"","email"=>"","phone"=>"","addr"=>"","city"=>"","state" => "","country"=>"","zip_code"=>"","se_first_name"=>"","se_last_name"=>"","se_email"=>"","se_phone"=>"","se_addr"=>"","se_city"=>"","se_state"=>"","se_country"=>"","se_zip_code"=>"","a_c"=>"","p_addr1"=>"","p_addr2"=>"","p_city"=>"","p_state"=>"","p_zip_code"=>"","r_name"=>"","r_no"=>"","r_desc_dtl"=>"","m_name"=>"","m_cnt"=>"","m_s_d"=>"","m_e_d"=>"","m_desc"=>"","m_id"=>"","client_id1"=>"","client_id2"=>"","r_id"=>"","p_b_f"=>"");
       $user_sess_data = $this->session->userdata("user_data");
       $form = $this->input->post();
@@ -192,8 +188,10 @@ class Project extends Admin_Controller
               $up = $this->projects_model->update(array("id"=>$value['m_id']),$milestone_dtl,"project_milestones");
           }
           else
+          {
             $this->projects_model->insert($milestone_dtl,"project_milestones");
-          // $this->send_mail($milestone_dtl,$form);
+            $this->send_mail($milestone_dtl,$form);
+          }
         }
         /* Insert Room Nuber */
         foreach($form['r_name'] as $key1=>$value1)
@@ -273,15 +271,9 @@ class Project extends Admin_Controller
     function send_mail($milestone_dtl,$form)
     {
 
-      $this->load->library('email');
-
       $contractor_dtl = $this->projects_model->get_data("contractor",array('id'=>$milestone_dtl['contractor_id']),'email1,email2')->row_array();
-
-
-      $work_items_dtl = $this->db->query("select id,work_name from work_items where id in (".$milestone_dtl['work_items'].")")->result_array();
-      
+      $work_items_dtl = $this->db->query("select id,work_name from work_items where id in (".$milestone_dtl['work_items'].")")->result_array();      
       $work_item_arr = array();
-
       if(count($work_items_dtl))
       {
         foreach ($work_items_dtl as $key => $value) 
@@ -292,55 +284,30 @@ class Project extends Admin_Controller
         $work_item_final_list = implode(',',$work_item_arr); 
       }
 
-      $cust_msg  =  'Hello,<br/> . <br/><br/> Your Project Milestone Information Details Listed Below.Please check it.<br/>';
-      
+      $cust_msg  =  'Hello,<br/> . <br/><br/> Your Project Milestone Information Details Listed Below.Please check it.<br/>';     
       $cust_msg .=  '<h3>Project Details:</h3><br>';
-
       $cust_msg .=  '<b>Project Name:</b> '.$form['p_name'].'<br>';
-
       $cust_msg .=  '<b>Project Start Date:</b> '.$form['p_s_d'].'<br>';
-
       $cust_msg .=  '<b>Project End Date:</b> '.$form['p_e_d'].'<br>';
-
       $cust_msg .=  '<h3>Project Location:</h3><br>';
-
       $cust_msg .=  '<b>Project Address1:</b> '.$form['p_addr1'].'<br>';
-
       $cust_msg .=  '<b>Project Address2:</b> '.$form['p_addr2'].'<br>';
-
       $cust_msg .=  '<b>Project City:</b> '.$form['p_city'].'<br>';
-
       $cust_msg .=  '<b>Project State:</b> '.$form['p_state'].'<br>';
-
       $cust_msg .=  '<b>Project Zipcode:</b> '.$form['p_zip_code'].'<br>';
-
       $cust_msg .=  '<h3>Project Milestone Details:</h3><br>';
-
       $cust_msg .=  '<b>Milestone Name:</b> '.$milestone_dtl['name'].'<br>';
-
       $cust_msg .=  '<b>Milestone Start Date:</b> '.$milestone_dtl['start_date'].'<br>';
-
       $cust_msg .=  '<b>Milestone End Date:</b> '.$milestone_dtl['end_date'].'<br>';
-
       $cust_msg .=  '<b>Milestone Work Items:</b> '.$work_item_final_list.'<br>';
-
       $cust_msg .=  'Best Regards, <br/> Construction Team.';
-            
-      $this->email->set_mailtype("html");  
-      
-      $this->email->from('gavaskarizaap@gmail.com', 'Construction');
-      
-      $this->email->to($contractor_dtl['email1']);
-      
-      $this->email->cc($contractor_dtl['email2']);
-      
-      $this->email->subject('Project Milestone Information');
-      
-      $this->email->message($cust_msg);
-      
-      $this->email->send();
-
-      return TRUE;
+      $to = $contractor_dtl['email1'];
+      $cc = $contractor_dtl['email2'];
+      $from = 'gavaskarizaap@gmail.com';
+      $from_name = 'Construction';
+      $subject = 'Project Milestone Information';
+      $mail = send_mail($to,$from,$from_name,$cc,$subject,$cust_msg);
+      return $mail;
     }
 
     function compareDates()

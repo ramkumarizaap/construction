@@ -74,4 +74,24 @@ $config['works_index'] = array(
 	"default_direction" => "DESC"
 );
 
+$config['milestone_index'] = array(
+	"view"		=> 	'listing/listing',
+	"init_scripts" => 'listing/init_scripts',
+	"advance_search_view" => 'frontend/milestone/filter',
+	"base_url"	=> 	'/milestone/index/',
+	"per_page"	=>	"20",
+	"fields"	=> array(   
+						'p_name'=>array('name'=>'Project Name', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'name'=>array('name'=>'Milestone Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),					
+						// 'description'=>array('name'=>'Description', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),
+						'start_date'=>array('name'=>'Start Date', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'end_date'=>array('name'=>'End Date', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'c_name'=>array('name'=>'Contractor Name', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'status'=>array('name'=>'Status', 'data_type' => 'status_change', 'sortable' => FALSE, 'default_view'=>1)),
+
+	"default_order"	=> "id",
+	"default_direction" => "DESC"
+);
+
+
 ?>

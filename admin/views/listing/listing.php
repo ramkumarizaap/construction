@@ -56,10 +56,8 @@ $uri = $this->uri->segment(2);?>
 					
 				<?php endif;?>
 				</th>
-
 				<?php endforeach;?>
 				<th>Action</th>
-				
 			</tr>
 		</thead>
 		<tbody>

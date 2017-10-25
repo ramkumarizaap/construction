@@ -2,6 +2,9 @@ $(function()
 {
 
 
+    $("[data-fancybox]").fancybox({
+    // Options will go here
+  });
     $("input[name='a_c[]']").click(function()
     {
         if($(this).prop('checked'))
@@ -99,4 +102,26 @@ function scroll_to(jump_id){
 function capitaliseFirstLetter(string)
 {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function change_status(id='',type='')
+{
+  if(type=='0')
+  {
+    $(".label-"+id).addClass("hide");
+    $(".select-status-"+id).removeClass("hide");
+  }
+  else if(type=='1')
+  {
+    val = $("select.select-status-"+id).val();
+    $.ajax({
+        type:"POST",
+        url:base_url+'milestone/change_status',
+        data:{id:id,status:val},
+        success:function(data)
+        {
+          refresh_grid();
+        }
+    });
+  }
 }

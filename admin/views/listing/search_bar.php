@@ -1,4 +1,4 @@
-<?php if($btn){?>
+<?php if(isset($btn)){?>
 <div class="col-md-3 pull-right">
   <div class="row">
     <div class="col-md-12">

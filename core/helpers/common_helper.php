@@ -128,6 +128,13 @@ function displayData($data = null, $type = 'string', $row = array(), $wrap_tag_o
            $labels_array = array('COMPLETED' => 'label-success','PROCESSING' => 'label-success','CANCELLED' => 'label-danger','HOLD' => 'label-danger','PENDING'=>'label-warning');
            $data = "<span class='label {$labels_array[$data]}'>{$data}</span>";
           break;
+        case "status_change":
+            $labels_array = array('COMPLETED' => 'label-success','PROCESSING' => 'label-success','CANCELLED' => 'label-danger','HOLD' => 'label-danger','PENDING'=>'label-warning');
+            $data = "<span class='label status_label label-".$row['id']." {$labels_array[$data]}'>{$data}</span><br><br>";
+            $data .= "<a href='javascript:;' class='label-".$row['id']."' onclick='change_status(".$row['id'].",0)'>Change Status</a>";
+            $data .= form_dropdown('status',array('PENDING'=>"PENDING",'PROCESSING'=>"PROCESSING","HOLD"=>"HOLD","COMPLETED"=>"COMPLETED"),'',"class='form-control hide select-status-".$row['id']."'");
+            $data .="<br><a href='javascript:;' class='select-status-".$row['id']." hide btn btn-danger' onclick='change_status(".$row['id'].",1)'>Save</a>";
+        break;
         case 'datetime':
             $data = str2USDate($data);
             break;
@@ -467,6 +474,21 @@ function is_valid_user($user_id = 0)
     $result = $CI->db->user_model->get_where(array('id' => $user_id));
 
     return $result->num_rows()?TRUE:FALSE;
+}
+
+function send_email($to='',$from='',$from_name='',$cc='',$subject='',$message='')
+{
+  $this->load->library('email');
+  $this->email->set_mailtype("html");        
+  $this->email->from($from, $from_name);      
+  $this->email->to($to);      
+  $this->email->cc($cc);      
+  $this->email->subject($subject);      
+  $this->email->message($message);      
+  if($this->email->send())
+    return true;
+  else
+    return false;
 }
 
 ?>
