@@ -63,7 +63,7 @@ class Project extends Admin_Controller
     }
     public function add($edit_id ='')
     {
-      $this->data['editdata'] = array("p_name" => "","p_s_d"=>"","p_e_d"=>"","first_name"=>"","last_name"=>"","email"=>"","phone"=>"","addr"=>"","city"=>"","state" => "","country"=>"","zip_code"=>"","se_first_name"=>"","se_last_name"=>"","se_email"=>"","se_phone"=>"","se_addr"=>"","se_city"=>"","se_state"=>"","se_country"=>"","se_zip_code"=>"","a_c"=>"","p_addr1"=>"","p_addr2"=>"","p_city"=>"","p_state"=>"","p_zip_code"=>"","r_name"=>"","r_no"=>"","r_desc_dtl"=>"","m_name"=>"","m_cnt"=>"","m_s_d"=>"","m_e_d"=>"","m_desc"=>"","m_id"=>"","client_id1"=>"","client_id2"=>"","r_id"=>"","p_b_f"=>"");
+      $this->data['editdata'] = array("p_name" => "","p_s_d"=>"","p_e_d"=>"","first_name"=>"","last_name"=>"","email"=>"","phone"=>"","addr"=>"","city"=>"","state" => "","country"=>"US","zip_code"=>"","se_first_name"=>"","se_last_name"=>"","se_email"=>"","se_phone"=>"","se_addr"=>"","se_city"=>"","se_state"=>"","se_country"=>"US","se_zip_code"=>"","a_c"=>"","p_addr1"=>"","p_addr2"=>"","p_city"=>"","p_state"=>"","p_zip_code"=>"","r_name"=>"","r_no"=>"","r_desc_dtl"=>"","m_name"=>"","m_cnt"=>"","m_s_d"=>"","m_e_d"=>"","m_desc"=>"","m_id"=>"","client_id1"=>"","client_id2"=>"","r_id"=>"","p_b_f"=>"","manager"=>"","superintendent"=>"");
       $user_sess_data = $this->session->userdata("user_data");
       $form = $this->input->post();
       $this->layout->add_stylesheets(array('components.min','bootstrap-datepicker3.min'));      
@@ -107,7 +107,7 @@ class Project extends Admin_Controller
         $client_dtl['city'] = $form['city'];        
         $client_dtl['state'] = $form['state'];        
         $client_dtl['country'] = $form['country'];        
-        $client_dtl['zip'] = $form['zip_code'];        
+        $client_dtl['zip'] = $form['zip_code'];
         $client_dtl['created_id'] = $user_sess_data['id'];        
         $client_dtl['created_date'] = date("Y-m-d H:i:s");
         if($edit_id)
@@ -140,8 +140,10 @@ class Project extends Admin_Controller
         $project_dtl['start_date'] = date("Y-m-d",strtotime($form['p_s_d']));        
         $project_dtl['complete_date'] = date("Y-m-d",strtotime($form['p_e_d']));        
         $project_dtl['client_contact1'] =$client_info_id;        
-        $project_dtl['client_contact2'] = $client_sec_info_id;        
-        $project_dtl['project_address1'] = $form['p_addr1'];        
+        $project_dtl['client_contact2'] = $client_sec_info_id;
+        $project_dtl['project_address1'] = $form['p_addr1'];
+        $project_dtl['manager'] = $form['manager'];
+        $project_dtl['superintendent'] = $form['superintendent'];
         $project_dtl['project_address2'] = $form['p_addr2'];        
         $project_dtl['project_city'] = $form['p_city'];        
         $project_dtl['project_state'] = $form['p_state'];        
@@ -183,7 +185,10 @@ class Project extends Admin_Controller
           if($edit_id)
           {
             if($value['m_id']=='')
+            {
               $this->projects_model->insert($milestone_dtl,"project_milestones");
+              $this->send_mail($milestone_dtl,$form);
+            }
             else
               $up = $this->projects_model->update(array("id"=>$value['m_id']),$milestone_dtl,"project_milestones");
           }
@@ -306,7 +311,7 @@ class Project extends Admin_Controller
       $from = 'gavaskarizaap@gmail.com';
       $from_name = 'Construction';
       $subject = 'Project Milestone Information';
-      $mail = send_mail($to,$from,$from_name,$cc,$subject,$cust_msg);
+      $mail = send_email($to,$from,$from_name,$cc,$subject,$cust_msg);
       return $mail;
     }
 

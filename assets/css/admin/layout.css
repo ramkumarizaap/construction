@@ -2612,3 +2612,13 @@ Page Loading
   display: none;
   transition: all 2s;
 }
+
+
+
+.milestone-view .grid
+{
+  border:1px solid red;
+  border-radius: 5px !important;
+  background: hsla(0, 0%, 0%, 0) linear-gradient(to bottom, hsl(0, 0%, 100%) 22%, hsl(0, 0%, 96%) 100%) repeat scroll 0 0;
+    border: 3px solid hsl(0, 0%, 85%);
+}

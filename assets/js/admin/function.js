@@ -5,19 +5,19 @@ $(function()
     $("[data-fancybox]").fancybox({
     // Options will go here
   });
-    $("input[name='a_c[]']").click(function()
-    {
-        if($(this).prop('checked'))
-        {
-            var cont_name = $(this).attr("data-contractor");
+    // $("input[name='a_c[]']").click(function()
+    // {
+    //     if($(this).prop('checked'))
+    //     {
+    //         var cont_name = $(this).attr("data-contractor");
 
-            $("select").append("<option value='"+$(this).val()+"'>"+cont_name+"</option>");
-        }
-        else
-        {
-            $("select [value='"+$(this).val()+"']").remove();
-        }
-    });
+    //         $("select.contractor_select").append("<option value='"+$(this).val()+"'>"+cont_name+"</option>");
+    //     }
+    //     else
+    //     {
+    //         $("select.contractor_select [value='"+$(this).val()+"']").remove();
+    //     }
+    // });
 
     $(".mt-repeater-add2").click(function()
     {

@@ -48,7 +48,75 @@
                               <label class="control-label">End Date : <b><?=$milestone[0]['end_date'];?></b></label>
                           </div>
                         </div><br>
-                        <table class="table table-striped table-hover table-bordered" id="data_table">
+                        <div class="row milestone-view">
+                            <div class="col-md-12">
+                              <div class="grid">
+                                  <table width="100%">
+                                    <tbody>
+                                      <tr>
+                                        <td align="center" width="10%"><b>Work Item</b></td>
+                                        <td align="center" width="10%"><b>Room No</b></td>
+                                        <td align="center" width="40%"><b>Description</b></td>
+                                        <td align="center" width="30%"><b>Photos</b></td>
+                                        <td align="center" width="10%"><b>Status</b></td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="3">&nbsp;</td>
+                                      </tr>
+                                        <?php
+                                        if($milestone)
+                                        {
+                                          $i=1;
+                                          foreach ($milestone as $key => $value)
+                                          {
+                                            $img = explode(",",$value['photos']);
+                                            ?>
+                                              <tr>
+                                                <td align="center" width="10%"><?=$value['w_name'];?></td>
+                                                <td align="center" width="10%"><?=$value['room_name'];?></td>
+                                                <td align="center" width="40%"><?=$value['description'];?></td>
+                                                <td align="center" width="30%">
+                                                  <?php
+                                                  if(count($img)>0)
+                                                  {
+                                                    $j = 0;
+                                                    foreach ($img as $value1)
+                                                    {
+                                                    ?>
+                                                      <a data-fancybox="gallery<?=$i;?>" href="<?=base_path()."milestone_status/".$value1;?>">
+                                                        <img src="<?=base_path()."milestone_status/".$value1;?>" style="width:50px;height:40px;">
+                                                      </a>
+                                                     <?php
+                                                    }
+                                                  }?>
+                                                </td>
+                                                <td align="center" width="10%"><?=displayData($value['status'],"status");?></td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="3">&nbsp;</td>
+                                              </tr>
+                                            <?php
+                                            $i++;
+                                          }
+                                        }
+                                        else
+                                        {
+                                          ?>
+                                          <tr>
+                                            <td colspan="7" align="center">No Records Found.</td>
+                                          </tr>
+                                          <?php
+                                        }
+                                        ?>
+                                      <tr>
+                                        <td colspan="3">&nbsp;</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- <table class="table table-striped table-hover table-bordered" id="data_table">
                           <thead>
                             <th>SNO</th>
                             <th>Work Item</th>
@@ -112,7 +180,7 @@
                             }
                             ?>
                           </tbody>
-                        </table>
+                        </table> -->
                           </div>
                           <?php
                       }

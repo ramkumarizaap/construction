@@ -36,7 +36,7 @@
             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
             <img alt="" class="img-circle" src=""/>
             <span class="username username-hide-on-mobile">
-            Welcome <?=$profile['name'];?> </span>
+            Welcome <?=$profile['first_name'];?> </span>
             <i class="fa fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-default">
@@ -71,19 +71,38 @@
           <div class="sidebar-toggler">
           </div>
         </li>
+        <?php
+        if(isset($profile['role']) && $profile['role']!="2")
+        {
+        ?>
+        <li class="start <?=($uri=='manager')?'active':'';?>">
+          <a href="<?=site_url('manager');?>">
+          <i class="fa fa-user"></i>
+          <span class="manager">Project Manager</span>
+          <?=($uri=='manager')?"<span class='selected'>":"";?>
+          </a>
+        </li>
+        <?php
+      }?>
+      <li class="start <?=($uri=='superintendent')?'active':'';?>">
+          <a href="<?=site_url('superintendent');?>">
+          <i class="fa fa-user"></i>
+          <span class="superintendent">Superintendent</span>
+          <?=($uri=='superintendent')?"<span class='selected'>":"";?>
+          </a>
+        </li>
+        <li class="start <?=($uri=='contractors')?'active':'';?>">
+          <a href="<?=site_url('contractors');?>">
+          <i class="fa fa-users"></i>
+          <span class="title">Sub Contractors</span>
+          <?=($uri=='contractors')?"<span class='selected'>":"";?>
+          </a>
+        </li>
         <li class="start <?=($uri=='project')?'active':'';?>">
           <a href="<?=site_url('project');?>">
           <i class="fa fa-anchor"></i>
           <span class="title">Project</span>
           <?=($uri=='project')?"<span class='selected'>":"";?>
-          </a>
-        </li>
-
-        <li class="start <?=($uri=='contractors')?'active':'';?>">
-          <a href="<?=site_url('contractors');?>">
-          <i class="fa fa-users"></i>
-          <span class="title">Contractors</span>
-          <?=($uri=='contractors')?"<span class='selected'>":"";?>
           </a>
         </li>
         <li class="start <?=($uri=='works')?'active':'';?>">
@@ -96,7 +115,7 @@
         <li class="start <?=($uri=='milestone')?'active':'';?>">
           <a href="<?=site_url('milestone');?>">
           <i class="fa fa-sitemap"></i>
-          <span class="title">Milestone Status</span>
+          <span class="title">Item Status</span>
           <?=($uri=='milestone')?"<span class='selected'>":"";?>
           </a>
         </li>

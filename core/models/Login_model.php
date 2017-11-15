@@ -15,20 +15,18 @@ class Login_Model extends CI_Model
         $this->db->select("*");
         $this->db->from('admin_users');
         $this->db->where('email', $email);
+        $this->db->or_where('username', $email);
         $this->db->where('password', $pass);
 
         $user = $this->db->get()->row_array();
      
       if(count($user)>0)
       {      
-        $this->session->set_userdata('user_data', $user);
-        
+        $this->session->set_userdata('user_data', $user);        
         return TRUE;
-      }
-      
+      }      
       return FALSE;
    }
-   
    public function logout()
    {
         $this->session->sess_destroy();

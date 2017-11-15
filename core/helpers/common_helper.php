@@ -125,7 +125,7 @@ function displayData($data = null, $type = 'string', $row = array(), $wrap_tag_o
             str2USDate($data);
             break;
         case 'status':
-           $labels_array = array('COMPLETED' => 'label-success','PROCESSING' => 'label-success','CANCELLED' => 'label-danger','HOLD' => 'label-danger','PENDING'=>'label-warning');
+           $labels_array = array('COMPLETED' => 'label-success','PROCESSING' => 'label-success','CANCELLED' => 'label-danger','HOLD' => 'label-danger','PENDING'=>'label-warning','Active' => 'label-success','Inactive'=>'label-danger');
            $data = "<span class='label {$labels_array[$data]}'>{$data}</span>";
           break;
         case "status_change":
@@ -475,20 +475,33 @@ function is_valid_user($user_id = 0)
 
     return $result->num_rows()?TRUE:FALSE;
 }
-
 function send_email($to='',$from='',$from_name='',$cc='',$subject='',$message='')
 {
-  $this->load->library('email');
-  $this->email->set_mailtype("html");        
-  $this->email->from($from, $from_name);      
-  $this->email->to($to);      
-  $this->email->cc($cc);      
-  $this->email->subject($subject);      
-  $this->email->message($message);      
-  if($this->email->send())
+  $CI = & get_instance();
+  $CI->load->library('email');
+  $CI->email->set_mailtype("html");        
+  $CI->email->from($from, $from_name);      
+  $CI->email->to($to);      
+  $CI->email->cc($cc);      
+  $CI->email->subject($subject);      
+  $CI->email->message($message);      
+  if($CI->email->send())
     return true;
   else
     return false;
+}
+
+function get_user_by_role($role='')
+{
+  $CI = & get_instance();
+  $CI->db->where("role",$role);
+  $res = array();
+  $q = $CI->db->get("admin_users")->result_array();
+  foreach ($q as $key => $value)
+  {
+    $res[$value['id']] = $value['first_name'];
+  }
+  return $res;
 }
 
 ?>

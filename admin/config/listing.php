@@ -40,6 +40,40 @@ $config['contractors_index'] = array(
 	"default_direction" => "DESC"
 );
 
+
+
+$config['manager_index'] = array(
+	"view"		=> 	'listing/listing',
+	"init_scripts" => 'listing/init_scripts',
+	"advance_search_view" => 'frontend/manager/filter',
+	"base_url"	=> 	'/manager/index/',
+	"per_page"	=>	"20",
+	"fields"	=> array(
+						'first_name'=>array('name'=>'Contractor Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),
+						'email'=>array('name'=>'Email', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'phone'=>array('name'=>'Phone', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'status'=>array('name'=>'Status', 'data_type' => 'status', 'sortable' => FALSE, 'default_view'=>1)),
+
+	"default_order"	=> "id",
+	"default_direction" => "DESC"
+);
+
+
+$config['superintendent_index'] = array(
+	"view"		=> 	'listing/listing',
+	"init_scripts" => 'listing/init_scripts',
+	"advance_search_view" => 'frontend/superintendent/filter',
+	"base_url"	=> 	'/superintendent/index/',
+	"per_page"	=>	"20",
+	"fields"	=> array(
+						'first_name'=>array('name'=>'Contractor Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),
+						'email'=>array('name'=>'Email', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'phone'=>array('name'=>'Phone', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'status'=>array('name'=>'Status', 'data_type' => 'status', 'sortable' => FALSE, 'default_view'=>1)),
+
+	"default_order"	=> "id",
+	"default_direction" => "DESC"
+);
 $config['project_index'] = array(
 	"view"		=> 	'listing/listing',
 	"init_scripts" => 'listing/init_scripts',
