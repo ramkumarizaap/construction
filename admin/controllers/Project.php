@@ -35,7 +35,7 @@ class Project extends Admin_Controller
       
       if(!is_logged_in())
         redirect('login');
-      
+      $this->user = get_user_data();
       $this->load->model('projects_model');
     }    
 
@@ -45,7 +45,9 @@ class Project extends Admin_Controller
       $this->load->library('listing');      
       $this->simple_search_fields = array('id'=>'Project ID#','project_name' => 'Project Name','start_date'=>'Start Date','complete_date'=>'Completed Date','status'=>'Status');      
       $this->_narrow_search_conditions = array("start_date");      
-      $str = '<a href="'.site_url('project/add/{id}').'" class="btn btn btn-padding yellow table-action"><i class="fa fa-edit edit"></i></a><a href="javascript:void(0);" data-original-title="Remove" data-toggle="tooltip" data-placement="top" class="table-action btn-padding btn red" onclick="delete_record(\'project/delete/{id}\',this);"><i class="fa fa-trash-o trash"></i></a>';      
+      $str = '<a href="'.site_url('project/add/{id}').'" class="btn btn btn-padding yellow table-action"><i class="fa fa-edit edit"></i></a>';
+      if($this->user['role']=="1")
+      $str .='<a href="javascript:void(0);" data-original-title="Remove" data-toggle="tooltip" data-placement="top" class="table-action btn-padding btn red" onclick="delete_record(\'project/delete/{id}\',this);"><i class="fa fa-trash-o trash"></i></a>';      
       $this->listing->initialize(array('listing_action' => $str));      
       $listing = $this->listing->get_listings('projects_model', 'listing');      
       $this->data['btn'] = "<a href=".site_url('project/add')." class='btn green'>Add New Project <i class='fa fa-plus'></i></a>"; 

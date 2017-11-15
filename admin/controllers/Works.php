@@ -7,7 +7,7 @@ class Works extends Admin_Controller
   function __construct()
   {
     parent::__construct();
-    
+    $this->user = get_user_data();
     if(!is_logged_in())
       redirect('login');
 
@@ -19,7 +19,9 @@ class Works extends Admin_Controller
     $this->load->library('listing');
     $this->simple_search_fields = array('work_name' => 'Work Name');
     $this->_narrow_search_conditions = array("start_date");
-    $str = '<a href="'.site_url('works/add/{id}').'" class="btn btn btn-padding yellow table-action"><i class="fa fa-edit edit"></i></a><a href="javascript:void(0);" data-original-title="Remove" data-toggle="tooltip" data-placement="top" class="table-action btn-padding btn red" onclick="delete_record(\'works/delete/{id}\',this);"><i class="fa fa-trash-o trash"></i></a>';    
+    $str = '<a href="'.site_url('works/add/{id}').'" class="btn btn btn-padding yellow table-action"><i class="fa fa-edit edit"></i></a>';
+    if($this->user['role']=="1")
+    $str .='<a href="javascript:void(0);" data-original-title="Remove" data-toggle="tooltip" data-placement="top" class="table-action btn-padding btn red" onclick="delete_record(\'works/delete/{id}\',this);"><i class="fa fa-trash-o trash"></i></a>';    
     $this->listing->initialize(array('listing_action' => $str));
     $listing = $this->listing->get_listings('works_model', 'listing');
     $this->data['btn'] = "<a href=".site_url('works/add')." class='btn green'>Add New Work <i class='fa fa-plus'></i></a>";

@@ -117,7 +117,7 @@ $config['milestone_index'] = array(
 	"fields"	=> array(   
 						'p_name'=>array('name'=>'Project Name', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
 						'name'=>array('name'=>'Milestone Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),					
-						// 'description'=>array('name'=>'Description', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),
+						'superintendent'=>array('name'=>'Superintendent', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),
 						'start_date'=>array('name'=>'Start Date', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
 						'end_date'=>array('name'=>'End Date', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
 						'c_name'=>array('name'=>'Contractor Name', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),

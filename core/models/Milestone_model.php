@@ -13,10 +13,11 @@ class Milestone_model extends App_model
   function listing()
   {  
     
-    $this->_fields = "a.*,b.first_name as c_name,c.project_name as p_name";
-    $this->db->from("project_milestones a");
-    $this->db->join("contractor b","a.contractor_id=b.id");
-    $this->db->join("project c","a.project_id=c.id");
+    $this->_fields = "a.*,b.first_name as c_name,c.project_name as p_name,d.first_name as superintendent";
+    $this->db->from("project_milestones a","left");
+    $this->db->join("contractor b","a.contractor_id=b.id","left");
+    $this->db->join("project c","a.project_id=c.id","left");
+    $this->db->join("admin_users d","c.superintendent=d.id","left");
     $this->db->group_by('id');
 
     foreach ($this->criteria as $key => $value)

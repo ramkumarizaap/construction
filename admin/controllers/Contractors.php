@@ -20,7 +20,7 @@ class Contractors extends Admin_Controller
     
     if(!is_logged_in())
       redirect('login');
-
+    $this->user = get_user_data();
     $this->load->model('contractor_model');
   }
 
@@ -34,7 +34,9 @@ class Contractors extends Admin_Controller
     $this->simple_search_fields = array('company_name' => 'Company Name','first_name'=>'Name','email1'=>'Email','office_phone'=>'Phone');
     $this->_narrow_search_conditions = array("start_date");
 
-    $str = '<a href="'.site_url('contractors/add/{id}').'" class="btn btn btn-padding yellow table-action"><i class="fa fa-edit edit"></i></a><a href="javascript:void(0);" data-original-title="Remove" data-toggle="tooltip" data-placement="top" class="table-action btn-padding btn red" onclick="delete_record(\'contractors/delete/{id}\',this);"><i class="fa fa-trash-o trash"></i></a>';
+    $str = '<a href="'.site_url('contractors/add/{id}').'" class="btn btn btn-padding yellow table-action"><i class="fa fa-edit edit"></i></a>';
+    if($this->user['role']==1)
+    $str .='<a href="javascript:void(0);" data-original-title="Remove" data-toggle="tooltip" data-placement="top" class="table-action btn-padding btn red" onclick="delete_record(\'contractors/delete/{id}\',this);"><i class="fa fa-trash-o trash"></i></a>';
     
     $this->listing->initialize(array('listing_action' => $str));
 

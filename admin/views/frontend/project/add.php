@@ -82,6 +82,7 @@
                                 
                               </div>
                               <div class="row">
+                                <?php if($this->user['role']!="2"){?>
                                 <div class="col-md-6">
                                   <div class="form-group <?php echo (form_error('manager'))?'has-error':'';?>">
                                      <label class="control-label col-md-3">Project Manager<span class="required">*</span></label>
@@ -91,6 +92,10 @@
                                      </div>
                                   </div>
                                 </div>
+                                <?php 
+                              }else{?>
+                              <input type="hidden" class="form-control form-control-inline" name="manager" id="manager" value="<?=$this->user['id'];?>"> 
+                              <?php }?>
                                 <div class="col-md-6">
                                   <div class="form-group <?php echo (form_error('superintendent'))?'has-error':'';?>">
                                      <label class="control-label col-md-3">Superintendent</label>
