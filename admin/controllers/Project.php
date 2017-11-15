@@ -8,6 +8,8 @@ class Project extends Admin_Controller
     protected $_project_validation_rules = array (
                  array('field' => 'first_name', 'label' => 'First Name', 'rules' => 'trim|required'),
                  array('field' => 'last_name', 'label' => 'Last Name', 'rules' => 'trim|required'),
+                 array('field' => 'manager', 'label' => 'Manager', 'rules' => 'trim|required'),
+                 array('field' => 'superintendent', 'label' => 'Superintendent', 'rules' => 'trim|required'),
                  array('field' => 'email', 'label' => 'Email', 'rules' => 'trim|required|valid_email'),
                  array('field' => 'se_email', 'label' => 'Email', 'rules' => 'trim|valid_email'),
                  array('field' => 'phone', 'label' => 'Phone', 'rules' => 'trim|required|numeric|max_length[12]|min_length[6]'),
