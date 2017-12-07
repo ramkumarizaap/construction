@@ -128,7 +128,7 @@ $uri = $this->uri->segment(1);
 											<tr>
 												<td><?=$ms['name'];?></td>
 												<td><?=$ms['description'];?></td>
-												<td><?=displayData($ms['start_date'],"");?></td>
+												<td><?=displayData($ms['start_date'],"date");?></td>
 												<td><?=displayData($ms['end_date'],"date");?></td>
 												<td><?=$ms['contractor'];?></td>
 												<td><?=$ms['works'];?></td>

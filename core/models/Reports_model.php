@@ -49,6 +49,14 @@ class Reports_model extends App_model
     }
     return parent::listing();
   }
-  
+  public function get_projects()
+  {
+    $this->db->select("a.*,b.first_name as manager,c.first_name as super");
+    $this->db->from("project a");
+    $this->db->join("admin_users b","a.manager=b.id");
+    $this->db->join("admin_users c","a.superintendent=c.id");
+    $q = $this->db->get();
+    return $q->result_array();
+  }
 }
 ?>

@@ -72,7 +72,6 @@
           </div>
         </li>
         <?php
-        echo $profile['role'];
         if(isset($profile['role']) && ($profile['role']!="2" && $profile['role']!="3"))
         {
         ?>

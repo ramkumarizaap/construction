@@ -39,7 +39,8 @@ class Reports extends Admin_Controller
 
   public function export_excel()
   {
-  	$this->load->view('frontend/reports/excel');
+  	$this->data['projects'] = $this->reports_model->get_projects();
+  	$this->load->view('frontend/reports/excel',$this->data);
   }
 }
 ?>

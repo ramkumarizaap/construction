@@ -33,6 +33,7 @@ $(function()
       attr = base_url+"reports/export_excel";
       $("form#simple_search_form").attr("action",attr);
       $("form#simple_search_form").submit();
+      $("form#simple_search_form").attr("action","");
     });
 
     $('#data_table tbody').on('click', 'td a.details-control', function () {
