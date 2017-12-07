@@ -29,7 +29,22 @@ $(function()
 
     });
 
+    $(".export-btn").click(function(){
+      attr = base_url+"reports/export_excel";
+      $("form#simple_search_form").attr("action",attr);
+      $("form#simple_search_form").submit();
+    });
+
+    $('#data_table tbody').on('click', 'td a.details-control', function () {
+        var tr = $(this).parent().parent().next("tr");
+        // $("tr.detailed-tr").addClass("hide");
+        if(tr.is(":visible"))
+          tr.addClass("hide");
+        else
+          tr.removeClass("hide");
+    });
 });	
+
 
 //to delete selected record from list.
 function delete_record(del_url,elm){

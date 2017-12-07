@@ -15,7 +15,7 @@
     <div class="page-header-inner">
       <!-- BEGIN LOGO -->
       <div class="page-logo">      
-        <h3 style="color: white;">Construction</h3>    
+        <h3 style="color: white;margin-top: 10px;">daVinci - GC Punch List Manager</h3>    
         <div class="menu-toggler sidebar-toggler hide">
           <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
         </div>
@@ -72,7 +72,8 @@
           </div>
         </li>
         <?php
-        if(isset($profile['role']) && $profile['role']!="2")
+        echo $profile['role'];
+        if(isset($profile['role']) && ($profile['role']!="2" && $profile['role']!="3"))
         {
         ?>
         <li class="start <?=($uri=='manager')?'active':'';?>">
@@ -83,7 +84,10 @@
           </a>
         </li>
         <?php
-      }?>
+      }
+      if(isset($profile['role']) && $profile['role']!="3")
+        {
+      ?>
       <li class="start <?=($uri=='superintendent')?'active':'';?>">
           <a href="<?=site_url('superintendent');?>">
           <i class="fa fa-user"></i>
@@ -91,6 +95,9 @@
           <?=($uri=='superintendent')?"<span class='selected'>":"";?>
           </a>
         </li>
+      <?php
+    }
+    ?>
         <li class="start <?=($uri=='contractors')?'active':'';?>">
           <a href="<?=site_url('contractors');?>">
           <i class="fa fa-users"></i>
@@ -117,6 +124,13 @@
           <i class="fa fa-sitemap"></i>
           <span class="title">Item Status</span>
           <?=($uri=='milestone')?"<span class='selected'>":"";?>
+          </a>
+        </li>
+        <li class="start <?=($uri=='reports')?'active':'';?>">
+          <a href="<?=site_url('reports');?>">
+          <i class="fa fa-file"></i>
+          <span class="title">Reports</span>
+          <?=($uri=='reports')?"<span class='selected'>":"";?>
           </a>
         </li>
       </ul>

@@ -127,5 +127,25 @@ $config['milestone_index'] = array(
 	"default_direction" => "DESC"
 );
 
+$config['reports_index'] = array(
+	"view"		=> 	'listing/listing',
+	"init_scripts" => 'listing/init_scripts',
+	"advance_search_view" => 'frontend/reports/filter',
+	"base_url"	=> 	'/reports/index/',
+	"per_page"	=>	"20",
+	"fields"	=> array(   
+						'project_name'=>array('name'=>'Project Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),					
+						'start_date'=>array('name'=>'Start Date', 'data_type' => 'date', 'sortable' => FALSE, 'default_view'=>1),
+						'complete_date'=>array('name'=>'Complete Date', 'data_type' => 'date', 'sortable' => FALSE, 'default_view'=>1),
+						'project_address'=>array('name'=>'Address', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'manager'=>array('name'=>'Manager', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'super'=>array('name'=>'Superintendent', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'status'=>array('name'=>'Status', 'data_type' => 'status', 'sortable' => FALSE, 'default_view'=>1)),
+
+	"default_order"	=> "a.id",
+	"default_direction" => "DESC"
+);
+
+
 
 ?>

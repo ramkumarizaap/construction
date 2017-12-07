@@ -5,7 +5,8 @@
 	<input type="hidden" name="base_url" id="base_url" value="<?php echo $base_url;?>" />
 	<input type="hidden" name="namespace" id="namespace" value="<?php echo $namespace;?>" />
 <?php 
-$uri = $this->uri->segment(2);?>
+$uri = $this->uri->segment(1);
+?>
 <br><br><br>
 <?php if($count):?>
 	<div class="row-fluid">
@@ -105,7 +106,45 @@ $uri = $this->uri->segment(2);?>
 					<?php endif;?>
 				</td>
 			</tr>
-            
+			<?php 
+			if($uri=="reports")
+			{
+				$milestones = get_project_milestones($item['id']);
+				?>
+					<tr class="detailed-tr hide">
+						<td colspan="8">
+							<table class="table table-bordered table-hover">
+								<thead>
+									<th>Milestone Name</th><th>Description</th><th>Start Date</th><th>End Date</th><th>Contractor</th>
+									<th>Work Items</th><th>Status</th>
+								</thead>
+								<tbody>
+									<?php 
+									if($milestones)
+									{
+										foreach ($milestones as $key => $ms)
+										{
+										?>
+											<tr>
+												<td><?=$ms['name'];?></td>
+												<td><?=$ms['description'];?></td>
+												<td><?=displayData($ms['start_date'],"");?></td>
+												<td><?=displayData($ms['end_date'],"date");?></td>
+												<td><?=$ms['contractor'];?></td>
+												<td><?=$ms['works'];?></td>
+												<td><?=displayData($ms['status'],"status");?></td>
+											</tr>
+										<?php
+										}
+									}
+									?>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					<?php
+				}
+			?>
     	<?php endforeach; ?>
 
 	        <?php else:?>
@@ -116,8 +155,8 @@ $uri = $this->uri->segment(2);?>
 			</tr>
 			<?php endif;?>
 		</tbody>
-	</table>
-    </div>
+		</table>
+  </div>
 </div>
 
 <div class="pagination text-right col-md-12 pull-right" id="pagination">

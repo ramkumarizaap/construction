@@ -205,9 +205,7 @@
 		$.fn.clear_advance_search = function(){
 			listing_form_data = {};
 			listing_form_data.clear_advance_search = 'yes';
-			if(current_controller == 'purchase'){
-				$('form#advance_search_form select').selectpicker('deselectAll');
-			}		
+			$("form#simple_search_form")[0].reset();
 
 			$.fn.display_grid(base_url+'/'+current_controller+'/'+current_method, 'data_table');
 		};

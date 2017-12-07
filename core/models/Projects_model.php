@@ -14,6 +14,11 @@ class Projects_model extends App_model
   {  
     
     $this->_fields = "*";
+    $user = get_user_data();
+    if($user['role']=="2")
+      $this->db->where("manager",$user['id']);
+    if($user['role']=="3")
+      $this->db->where("superintendent",$user['id']);
     $this->db->group_by('id');
 
     foreach ($this->criteria as $key => $value)

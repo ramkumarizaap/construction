@@ -12,8 +12,12 @@ class Milestone_model extends App_model
   
   function listing()
   {  
-    
+    $user = get_user_data();
     $this->_fields = "a.*,b.first_name as c_name,c.project_name as p_name,d.first_name as superintendent";
+    if($user['role']=="2")
+      $this->db->where("c.manager",$user['id']);
+    if($user['role']=="3")
+      $this->db->where("c.superintendent",$user['id']);
     $this->db->from("project_milestones a","left");
     $this->db->join("contractor b","a.contractor_id=b.id","left");
     $this->db->join("project c","a.project_id=c.id","left");

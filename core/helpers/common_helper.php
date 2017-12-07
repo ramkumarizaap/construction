@@ -122,7 +122,7 @@ function displayData($data = null, $type = 'string', $row = array(), $wrap_tag_o
             $data = humanize($data);
             break;
         case 'date':
-            str2USDate($data);
+            $data = str2USDate($data);
             break;
         case 'status':
            $labels_array = array('COMPLETED' => 'label-success','PROCESSING' => 'label-success','CANCELLED' => 'label-danger','HOLD' => 'label-danger','PENDING'=>'label-warning','Active' => 'label-success','Inactive'=>'label-danger');
@@ -151,7 +151,7 @@ function str2USDate($str)
     $intTime = strtotime($str);
     if ($intTime === false)
          return NULL;
-    return date("m/d/Y H:i:s", $intTime);
+    return date("m/d/Y", $intTime);
 }
 
 function str2USDT($str)
@@ -504,4 +504,23 @@ function get_user_by_role($role='')
   return $res;
 }
 
+function get_search_bar_values($table='',$field='',$where=array())
+{
+  $CI = & get_instance();
+  $res = array();
+  if($where)
+    $CI->db->where($where);
+  $q = $CI->db->get($table)->result_array();
+  foreach ($q as $key => $value)
+  {
+    $res[$value['id']] = $value[$field];
+  }
+  return $res;
+}
+function get_project_milestones($project_id='')
+{
+  $CI = & get_instance();
+  $q = $CI->db->query("select a.*, b.first_name as contractor, GROUP_CONCAT(c.work_name order by c.id SEPARATOR ', ') as works FROM project_milestones a JOIN contractor b ON a.contractor_id=b.id JOIN work_items c ON FIND_IN_SET(c.id,a.work_items) WHERE a.project_id = '".$project_id."' GROUP BY a.id");
+  return $q->result_array();
+}
 ?>
