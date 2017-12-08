@@ -49,8 +49,10 @@ class Reports_model extends App_model
     }
     return parent::listing();
   }
-  public function get_projects()
+  public function get_projects($where=array())
   {
+    if($where)
+      $this->db->where($where);
     $this->db->select("a.*,b.first_name as manager,c.first_name as super");
     $this->db->from("project a");
     $this->db->join("admin_users b","a.manager=b.id");

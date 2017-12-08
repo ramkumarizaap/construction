@@ -39,7 +39,20 @@ class Reports extends Admin_Controller
 
   public function export_excel()
   {
-  	$this->data['projects'] = $this->reports_model->get_projects();
+    $where = array();
+    if(isset($_POST['project_name']) && $_POST['project_name']!='')
+      $where['a.id'] = $_POST['project_name'];
+    if(isset($_POST['manager']) && $_POST['manager']!='')
+      $where['a.manager'] = $_POST['manager'];
+    if(isset($_POST['super']) && $_POST['super']!='')
+      $where['a.superintendent'] = $_POST['super'];
+    if(isset($_POST['start_date']) && $_POST['start_date']!='')
+      $where['a.start_date'] = $_POST['start_date'];
+    if(isset($_POST['end_date']) && $_POST['end_date']!='')
+      $where['a.complete_date'] = $_POST['end_date'];
+    if(isset($_POST['status']) && $_POST['status']!='')
+      $where['a.status'] = $_POST['status'];
+  	$this->data['projects'] = $this->reports_model->get_projects($where);
   	$this->load->view('frontend/reports/excel',$this->data);
   }
 }

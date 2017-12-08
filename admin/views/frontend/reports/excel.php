@@ -1,7 +1,8 @@
 <?php
- header("Content-Type: application/force-download");
+$filename = "Project Report ".date("Y-m-d").".xls";
+header("Content-Type: application/force-download");
 header("Content-type: application/excel");
-header("Content-Disposition: inline; filename=File.xls;");
+header("Content-Disposition: inline; filename=\"".$filename."\";");
 ?>
 <link rel="stylesheet" type="text/css" href="<?=base_path();?>assets/css/admin/bootstrap.min.css">
 <?php 
