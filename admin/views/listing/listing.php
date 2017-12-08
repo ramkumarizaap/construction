@@ -112,7 +112,7 @@ $uri = $this->uri->segment(1);
 				$milestones = get_project_milestones($item['id']);
 				?>
 					<tr class="detailed-tr hide">
-						<td colspan="8">
+						<td colspan="9">
 							<table class="table table-bordered table-hover">
 								<thead>
 									<th>Milestone Name</th><th>Description</th><th>Start Date</th><th>End Date</th><th>Contractor</th>

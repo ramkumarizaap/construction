@@ -19,8 +19,8 @@ class Reports extends Admin_Controller
   	$this->layout->add_javascripts(array('listing','bootstrap-datepicker.min','app.min','components-date-time-pickers.min'));
     $this->load->library('listing');
     $this->simple_search_fields = array();
-    $this->_narrow_search_conditions = array("project_name","manager","super","status","start_date","end_date");
-    $str = '<a href="javascript:;" class="details-control btn btn-info"><i class="fa fa-eye"></i> View Milestones</a>';
+    $this->_narrow_search_conditions = array("project_name","manager","super","status","start_date","end_date","contractor");
+    $str = '<a href="javascript:void;" class="details-control btn btn-info"><i class="fa fa-eye"></i> View Milestones</a>';
     if($this->user['role']==1)
     $this->listing->initialize(array('listing_action' => $str));
     $listing = $this->listing->get_listings('reports_model', 'listing');
@@ -39,7 +39,7 @@ class Reports extends Admin_Controller
 
   public function export_excel()
   {
-    $where = array();
+    $where = array();$like=array();
     if(isset($_POST['project_name']) && $_POST['project_name']!='')
       $where['a.id'] = $_POST['project_name'];
     if(isset($_POST['manager']) && $_POST['manager']!='')
@@ -52,7 +52,9 @@ class Reports extends Admin_Controller
       $where['a.complete_date'] = $_POST['end_date'];
     if(isset($_POST['status']) && $_POST['status']!='')
       $where['a.status'] = $_POST['status'];
-  	$this->data['projects'] = $this->reports_model->get_projects($where);
+    if(isset($_POST['contractor']) && $_POST['contractor']!='')
+      $like['d.contractor_id'] = $_POST['contractor'];
+  	$this->data['projects'] = $this->reports_model->get_projects($where,$like);
   	$this->load->view('frontend/reports/excel',$this->data);
   }
 }

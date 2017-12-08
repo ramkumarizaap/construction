@@ -140,6 +140,7 @@ $config['reports_index'] = array(
 						'project_address'=>array('name'=>'Address', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
 						'manager'=>array('name'=>'Manager', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
 						'super'=>array('name'=>'Superintendent', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'contractor'=>array('name'=>'Contractor', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
 						'status'=>array('name'=>'Status', 'data_type' => 'status', 'sortable' => FALSE, 'default_view'=>1)),
 
 	"default_order"	=> "a.id",

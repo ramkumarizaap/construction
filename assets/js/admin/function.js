@@ -38,7 +38,7 @@ $(function()
 
     $('#data_table tbody').on('click', 'td a.details-control', function () {
         var tr = $(this).parent().parent().next("tr");
-        // $("tr.detailed-tr").addClass("hide");
+        $("tr.detailed-tr").addClass("hide");
         if(tr.is(":visible"))
           tr.addClass("hide");
         else
